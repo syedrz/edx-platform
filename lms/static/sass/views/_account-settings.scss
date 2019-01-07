@@ -653,17 +653,28 @@
       .btn-alert-primary {
         @extend %btn-primary-blue;
 
+        @include font-size(18);
+
+        border: 1px solid $m-blue-d3;
+        border-radius: 3px;
         box-shadow: none;
-        font-size: 14px;
-        padding: 10px;
+        padding: 11px 14px;
+        line-height: normal;
       }
 
       .btn-alert-secondary {
-        @extend %btn-primary-gray;
+        @extend %ui-clear-button;
 
-        box-shadow: none;
-        font-size: 14px;
-        padding: 8px 10px;
+        // set styles
+        @extend %btn-pl-default-base;
+
+        @include font-size(18);
+
+        background-color: white;
+        border: 1px solid $blue;
+        color: $blue;
+        padding: 11px 14px;
+        line-height: normal;
       }
     }
   }

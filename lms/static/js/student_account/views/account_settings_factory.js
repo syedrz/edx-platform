@@ -429,7 +429,6 @@
             if (focusId) {
                 if (~focusId.indexOf('beta-language')) {
                     tabIndex = -1;
-                    $(focusId).attr({'aria-hidden': false});
                 }
                 $(focusId).attr({tabindex: tabIndex}).focus();
                 // Deleting the cookie

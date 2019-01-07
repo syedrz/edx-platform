@@ -52,7 +52,7 @@
                 fieldTemplate: field_dropdown_account_template,
 
                 initialize: function(options) {
-                    this._super(options);
+                    this._super(options);   // eslint-disable-line no-underscore-dangle
                     this.listenTo(this.model, 'revertValue', this.revertValue);
                 },
 

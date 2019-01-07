@@ -2,7 +2,7 @@
 <div class="account-settings-container">
     <% if (message) { %>
         <div class="account-settings-message">
-            <div id="beta-language-message" class="alert-message warning" aria-live="assertive" aria-hidden="true">
+            <div id="beta-language-message" class="alert-message warning" aria-live="assertive" role="alert">
                 <span><%= HtmlUtils.ensureHtml(message) %></span>
                 <div class="alert-actions">
                     <button class="btn-alert-primary" data-old-lang-code="<%- oldLangCode %>"><%- gettext('Switch Language Back') %></button>
