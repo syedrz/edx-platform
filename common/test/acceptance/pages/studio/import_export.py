@@ -80,11 +80,11 @@ class ImportExportMixin(object):
         for desc, css_class in self.task_classes.items():
             desc_text = desc_template.format(desc)
             # pylint: disable=cell-var-from-loop
-            EmptyPromise(lambda: self.q(css='.{}.{}'.format(css_class, state)).present, desc_text, timeout=30)
+            EmptyPromise(lambda: self.q(css=u'.{}.{}'.format(css_class, state)).present, desc_text, timeout=30)
             if fail_on == desc:
                 EmptyPromise(
-                    lambda: self.q(css='.{}.is-complete.has-error'.format(css_class)).present,
-                    "{} checkpoint marked as failed".format(desc),
+                    lambda: self.q(css=u'.{}.is-complete.has-error'.format(css_class)).present,
+                    u"{} checkpoint marked as failed".format(desc),
                     timeout=30
                 )
                 # The rest should never run.
@@ -102,9 +102,9 @@ class ImportExportMixin(object):
         Outputs the CSS class and promise description for task states based on completion.
         """
         if completed:
-            return 'is-complete', "'{}' is marked complete"
+            return 'is-complete', u"'{}' is marked complete"
         else:
-            return 'is-not-started', "'{}' is in not-yet-started status"
+            return 'is-not-started', u"'{}' is in not-yet-started status"
 
 
 class ExportMixin(ImportExportMixin):

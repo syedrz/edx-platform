@@ -60,9 +60,9 @@ class ProblemXBlockEditorView(XBlockEditorView):
             dropdown_name(string): Name of the dropdown to be opened
             value(string): Value to be selected
         """
-        self.q(css='select[class="input setting-input"][name="{}"]'.format(dropdown_name)).first.click()
-        self.wait_for_element_visibility('option[value="{}"]'.format(value), 'Dropdown is visible')
-        self.q(css='option[value="{}"]'.format(value)).click()
+        self.q(css=u'select[class="input setting-input"][name="{}"]'.format(dropdown_name)).first.click()
+        self.wait_for_element_visibility(u'option[value="{}"]'.format(value), 'Dropdown is visible')
+        self.q(css=u'option[value="{}"]'.format(value)).click()
 
     def get_value_from_the_dropdown(self, dropdown_name):
         """
@@ -74,7 +74,7 @@ class ProblemXBlockEditorView(XBlockEditorView):
 
         """
         dropdown = self.browser.find_element_by_css_selector(
-            'select[class="input setting-input"][name="{}"]'.format(dropdown_name)
+            u'select[class="input setting-input"][name="{}"]'.format(dropdown_name)
         )
         return Select(dropdown).first_selected_option.text
 

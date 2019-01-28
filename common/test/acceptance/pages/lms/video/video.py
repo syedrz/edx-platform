@@ -34,7 +34,7 @@ CSS_CLASS_NAMES = {
     'captions_rendered': '.video.is-captions-rendered',
     'captions': '.subtitles',
     'captions_text': '.subtitles li span',
-    'captions_text_getter': '.subtitles li span[role="link"][data-index="{}"]',
+    'captions_text_getter': u'.subtitles li span[role="link"][data-index="{}"]',
     'closed_captions': '.closed-captions',
     'error_message': '.video .video-player .video-error',
     'video_container': '.video',
@@ -387,7 +387,7 @@ class VideoPage(PageObject):
 
             # Verify that captions state is toggled/changed
             EmptyPromise(lambda: self.is_captions_visible() == captions_new_state,
-                         "Transcripts are {state}".format(state=state)).fulfill()
+                         u"Transcripts are {state}".format(state=state)).fulfill()
 
     @wait_for_js
     def _closed_captions_visibility(self, closed_captions_new_state):
@@ -404,7 +404,7 @@ class VideoPage(PageObject):
 
         # Make sure that the captions are visible
         EmptyPromise(lambda: self.is_closed_captions_visible() == closed_captions_new_state,
-                     "Closed captions are {state}".format(state=state)).fulfill()
+                     u"Closed captions are {state}".format(state=state)).fulfill()
 
     @property
     def captions_text(self):
@@ -677,7 +677,7 @@ class VideoPage(PageObject):
         element_to_hover_over = self.q(css=cc_button_selector).results[0]
         ActionChains(self.browser).move_to_element(element_to_hover_over).perform()
 
-        language_selector = VIDEO_MENUS["language"] + ' li[data-lang-code="{code}"]'.format(code=code)
+        language_selector = VIDEO_MENUS["language"] + u' li[data-lang-code="{code}"]'.format(code=code)
         language_selector = self.get_element_selector(language_selector)
         self.wait_for_element_visibility(language_selector, 'language menu is visible')
         hover_target = self.q(css=language_selector).results[0]
@@ -786,7 +786,7 @@ class VideoPage(PageObject):
 
         # For troubleshooting purposes show what the current state is.
         # The debug statements will only be displayed in the event of a failure.
-        logging.debug("Current state of '{}' element is '{}'".format(state_selector, current_state))
+        logging.debug(u"Current state of '{}' element is '{}'".format(state_selector, current_state))
 
         # See the JS video player's onStateChange function
         if 'is-playing' in current_state:
@@ -824,7 +824,7 @@ class VideoPage(PageObject):
         """
         self._wait_for(
             lambda: self.state == state,
-            'State is {state}'.format(state=state)
+            u'State is {state}'.format(state=state)
         )
 
     def seek(self, seek_value):
@@ -837,7 +837,7 @@ class VideoPage(PageObject):
         """
         seek_time = _parse_time_str(seek_value)
         seek_selector = self.get_element_selector(' .video')
-        js_code = "$('{seek_selector}').data('video-player-state').videoPlayer.onSlideSeek({{time: {seek_time}}})".format(
+        js_code = u"$('{seek_selector}').data('video-player-state').videoPlayer.onSlideSeek({{time: {seek_time}}})".format(
             seek_selector=seek_selector, seek_time=seek_time)
         self.browser.execute_script(js_code)
 
@@ -887,7 +887,7 @@ class VideoPage(PageObject):
         """
         self._wait_for(
             lambda: self.position == position,
-            'Position is {position}'.format(position=position)
+            u'Position is {position}'.format(position=position)
         )
 
     @property

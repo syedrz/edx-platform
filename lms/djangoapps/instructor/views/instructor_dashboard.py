@@ -136,10 +136,10 @@ def instructor_dashboard_2(request, course_id):
     if show_analytics_dashboard_message(course_key):
         # Construct a URL to the external analytics dashboard
         analytics_dashboard_url = '{0}/courses/{1}'.format(settings.ANALYTICS_DASHBOARD_URL, unicode(course_key))
-        link_start = HTML("<a href=\"{}\" target=\"_blank\">").format(analytics_dashboard_url)
+        link_start = HTML(u"<a href=\"{}\" target=\"_blank\">").format(analytics_dashboard_url)
         analytics_dashboard_message = _(
-            "To gain insights into student enrollment and participation {link_start}"
-            "visit {analytics_dashboard_name}, our new course analytics product{link_end}."
+            u"To gain insights into student enrollment and participation {link_start}"
+            "visit {analytics_dashboard_name}, our new course analytics product{link_end}."  # pylint: disable=unicode-format-string
         )
         analytics_dashboard_message = Text(analytics_dashboard_message).format(
             link_start=link_start, link_end=HTML("</a>"), analytics_dashboard_name=settings.ANALYTICS_DASHBOARD_NAME)
@@ -155,7 +155,7 @@ def instructor_dashboard_2(request, course_id):
     elif len(paid_modes) > 1:
         log.error(
             u"Course %s has %s course modes with payment options. Course must only have "
-            u"one paid course mode to enable eCommerce options.",
+            "one paid course mode to enable eCommerce options.",
             unicode(course_key), len(paid_modes)
         )
 
@@ -422,7 +422,7 @@ def set_course_mode_price(request, course_id):
     course_honor_mode = CourseMode.objects.filter(mode_slug='honor', course_id=course_key)
     if not course_honor_mode:
         return JsonResponse(
-            {'message': _("CourseMode with the mode slug({mode_slug}) DoesNotExist").format(mode_slug='honor')},
+            {'message': _(u"CourseMode with the mode slug({mode_slug}) DoesNotExist").format(mode_slug='honor')},
             status=400)  # status code 400: Bad Request
 
     CourseModesArchive.objects.create(

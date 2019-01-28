@@ -58,7 +58,7 @@ class Command(BaseCommand):
             raise CommandError(u"No audit_cohort_names set for MigrateVerifiedTrackCohortsSetting with ID: '%s'"
                                % verified_track_cohorts_setting.id)
 
-        print("Running for MigrateVerifiedTrackCohortsSetting with old_course_key='%s' and rerun_course_key='%s'" %
+        print(u"Running for MigrateVerifiedTrackCohortsSetting with old_course_key='%s' and rerun_course_key='%s'" %
               (verified_track_cohorts_setting.old_course_key, verified_track_cohorts_setting.rerun_course_key))
 
         # Get the CourseUserGroup IDs for the audit course names from the old course
@@ -70,7 +70,7 @@ class Command(BaseCommand):
 
         if not audit_course_user_group_ids:
             raise CommandError(
-                "No Audit CourseUserGroup found for course_id='%s' with group_type='%s' for names='%s'"
+                u"No Audit CourseUserGroup found for course_id='%s' with group_type='%s' for names='%s'"
                 % (old_course_key, CourseUserGroup.COHORT, audit_cohort_names)
             )
 
@@ -82,7 +82,7 @@ class Command(BaseCommand):
 
         if not random_audit_course_user_group_ids:
             raise CommandError(
-                "No Audit CourseCohorts found for course_user_group_ids='%s' with assignment_type='%s"
+                u"No Audit CourseCohorts found for course_user_group_ids='%s' with assignment_type='%s"
                 % (audit_course_user_group_ids, CourseCohort.RANDOM)
             )
 
@@ -94,7 +94,7 @@ class Command(BaseCommand):
 
         if not random_audit_course_user_group_partition_groups:
             raise CommandError(
-                "No Audit CourseUserGroupPartitionGroup found for course_user_group_ids='%s'"
+                u"No Audit CourseUserGroupPartitionGroup found for course_user_group_ids='%s'"
                 % random_audit_course_user_group_ids
             )
 
@@ -117,7 +117,7 @@ class Command(BaseCommand):
             )
         except CourseUserGroup.DoesNotExist:
             raise CommandError(
-                "No Verified CourseUserGroup found for course_id='%s' with group_type='%s' for names='%s'"
+                u"No Verified CourseUserGroup found for course_id='%s' with group_type='%s' for names='%s'"
                 % (old_course_key, CourseUserGroup.COHORT, verified_track_cohorted_course.verified_cohort_name)
             )
 
@@ -127,7 +127,7 @@ class Command(BaseCommand):
             )
         except CourseUserGroupPartitionGroup.DoesNotExist:
             raise CommandError(
-                "No Verified CourseUserGroupPartitionGroup found for course_user_group_ids='%s'"
+                u"No Verified CourseUserGroupPartitionGroup found for course_user_group_ids='%s'"
                 % random_audit_course_user_group_ids
             )
 
@@ -191,7 +191,7 @@ class Command(BaseCommand):
                     # This only needs to be checked for this partition_group once
                     if non_verified_track_access_groups:
                         errors.append(
-                            "Non audit/verified cohorted content group set for xblock, location '%s' with IDs '%s'"
+                            u"Non audit/verified cohorted content group set for xblock, location '%s' with IDs '%s'"
                             % (item.location, non_verified_track_access_groups)
                         )
                     if verified_course_user_group_partition_group.group_id in verified_partition_group_access:
@@ -216,7 +216,7 @@ class Command(BaseCommand):
                         item.group_access = {ENROLLMENT_TRACK_PARTITION_ID: enrollment_track_group_access}
                         items_to_update.append(item)
                     else:
-                        errors.append("XBlock '%s' with location '%s' needs access changes, but is a draft"
+                        errors.append(u"XBlock '%s' with location '%s' needs access changes, but is a draft"
                                       % (item.display_name, item.location))
 
         partitions_to_delete = random_audit_course_user_group_partition_groups

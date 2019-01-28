@@ -143,14 +143,14 @@ def recalculate_course_and_subsection_grades_for_user(self, **kwargs):  # pylint
     course_key_str = kwargs.get('course_key')
 
     if not (user_id or course_key_str):
-        message = 'recalculate_course_and_subsection_grades_for_user missing "user" or "course_key" kwargs from {}'
+        message = u'recalculate_course_and_subsection_grades_for_user missing "user" or "course_key" kwargs from {}'
         raise Exception(message.format(kwargs))
 
     user = User.objects.get(id=user_id)
     course_key = CourseKey.from_string(course_key_str)
     if are_grades_frozen(course_key):
         log.info(
-            "Attempted recalculate_course_and_subsection_grades_for_user for course '%s', but grades are frozen.",
+            u"Attempted recalculate_course_and_subsection_grades_for_user for course '%s', but grades are frozen.",
             course_key,
         )
         return
@@ -287,7 +287,7 @@ def _has_db_updated_with_new_score(self, scored_block_usage_key, **kwargs):
     if not db_is_updated:
         log.info(
             u"Grades: tasks._has_database_updated_with_new_score is False. Task ID: {}. Kwargs: {}. Found "
-            u"modified time: {}".format(
+            "modified time: {}".format(  # pylint: disable=unicode-format-string
                 self.request.id,
                 kwargs,
                 found_modified_time,

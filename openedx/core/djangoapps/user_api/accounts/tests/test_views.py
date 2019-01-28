@@ -521,7 +521,7 @@ class TestAccountsAPI(CacheIsolationTestCase, UserAPITestCase):
                 "This field is not editable via this API", data["field_errors"][field_name]["developer_message"]
             )
             self.assertEqual(
-                "The '{0}' field cannot be edited.".format(field_name), data["field_errors"][field_name]["user_message"]
+                u"The '{0}' field cannot be edited.".format(field_name), data["field_errors"][field_name]["user_message"]
             )
 
         for field_name in ["username", "date_joined", "is_active", "profile_image", "requires_parental_consent"]:

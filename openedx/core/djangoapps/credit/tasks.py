@@ -127,7 +127,7 @@ def _get_proctoring_requirements(course_key):
                 usage_key = UsageKey.from_string(exam['content_id'])
                 proctor_block = modulestore().get_item(usage_key)
             except (InvalidKeyError, ItemNotFoundError):
-                LOGGER.info("Invalid content_id '%s' for proctored block '%s'", exam['content_id'], exam['exam_name'])
+                LOGGER.info(u"Invalid content_id '%s' for proctored block '%s'", exam['content_id'], exam['exam_name'])
                 proctor_block = None
 
             if proctor_block:
@@ -142,7 +142,7 @@ def _get_proctoring_requirements(course_key):
 
     if requirements:
         log_msg = (
-            'Registering the following as \'proctored_exam\' credit requirements: {log_msg}'.format(
+            u'Registering the following as \'proctored_exam\' credit requirements: {log_msg}'.format(
                 log_msg=requirements
             )
         )

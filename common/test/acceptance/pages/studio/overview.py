@@ -40,7 +40,7 @@ class CourseOutlineItem(object):
         try:
             return u"{}(<browser>, {!r})".format(self.__class__.__name__, self.locator)
         except AttributeError:
-            return "{}(<browser>)".format(self.__class__.__name__)
+            return u"{}(<browser>)".format(self.__class__.__name__)
 
     def _bounded_selector(self, selector):
         """
@@ -153,7 +153,7 @@ class CourseOutlineItem(object):
             select_option_by_text(groups_select, partition_name)
 
             for group_id in group_ids:
-                checkbox = self.q(css='#content-group-{group_id}'.format(group_id=group_id))
+                checkbox = self.q(css=u'#content-group-{group_id}'.format(group_id=group_id))
                 checkbox.click()
             modal.save()
 
@@ -302,11 +302,11 @@ class CourseOutlineContainer(CourseOutlineItem):
         self.scroll_to_element(css_element)  # pylint: disable=no-member
         ele = self.browser.find_element_by_css_selector(css_element)  # pylint: disable=no-member
         ActionChains(self.browser).move_to_element_with_offset(ele, 8, 8).click().perform()  # pylint: disable=no-member
-        self.wait_for_element_presence(self._bounded_selector(self.ADD_BUTTON_SELECTOR), 'Subsection is expanded')
+        self.wait_for_element_presence(self._bounded_selector(self.ADD_BUTTON_SELECTOR), u'Subsection is expanded')
 
         EmptyPromise(
             lambda: subsection_expanded() != currently_expanded,
-            "Check that the container {} has been toggled".format(self.locator)
+            u"Check that the container {} has been toggled".format(self.locator)
         ).fulfill()
 
         enable_animations(self)
@@ -348,7 +348,7 @@ class CourseOutlineChild(PageObject, CourseOutlineItem):
         """
         Return `selector`, but limited to this particular `CourseOutlineChild` context
         """
-        return '{}[data-locator="{}"] {}'.format(
+        return u'{}[data-locator="{}"] {}'.format(
             self.BODY_SELECTOR,
             self.locator,
             selector
@@ -1007,14 +1007,14 @@ class CourseOutlineModal(object):
         else:  # Use default timepicker values, which are current month and year.
             current_month, current_year = datetime.datetime.today().month, datetime.datetime.today().year
         date_diff = 12 * (year - current_year) + month - current_month
-        selector = "a.ui-datepicker-{}".format('next' if date_diff > 0 else 'prev')
+        selector = u"a.ui-datepicker-{}".format('next' if date_diff > 0 else 'prev')
         for __ in xrange(abs(date_diff)):
             self.page.q(css=selector).click()
         self.page.q(css="a.ui-state-default").nth(day - 1).click()  # set day
         self.page.wait_for_element_invisibility("#ui-datepicker-div", "datepicker should be closed")
         EmptyPromise(
             lambda: getattr(self, property_name) == u'{m}/{d}/{y}'.format(m=month, d=day, y=year),
-            "{} is updated in modal.".format(property_name)
+            u"{} is updated in modal.".format(property_name)
         ).fulfill()
 
     def set_time(self, input_selector, time):

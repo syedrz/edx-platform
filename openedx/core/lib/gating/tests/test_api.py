@@ -282,7 +282,7 @@ class TestGatingApi(ModuleStoreTestCase, MilestonesTestCaseMixin):
         completed,
         expected_completion_percentage
     ):
-        """
+        u"""
         Test if gating_api.get_subsection_completion_percentage returns expected completion percentage
         when only a single component in a vertical/unit
 

@@ -23,7 +23,7 @@ class TeamCardsMixin(object):
 
     def _bounded_selector(self, css):
         """Bind the CSS to a particular tabpanel (e.g. My Teams or Browse)."""
-        return '{tabpanel_id} {css}'.format(tabpanel_id=getattr(self, 'tabpanel_id', ''), css=css)
+        return u'{tabpanel_id} {css}'.format(tabpanel_id=getattr(self, 'tabpanel_id', ''), css=css)
 
     def view_first_team(self):
         """Click the 'view' button of the first team card on the page."""

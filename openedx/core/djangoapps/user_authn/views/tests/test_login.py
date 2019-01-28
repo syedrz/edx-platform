@@ -539,7 +539,7 @@ class LoginTest(CacheIsolationTestCase):
             self.assertEqual(response_dict['success'], success)
 
         if value is not None:
-            msg = ("'%s' did not contain '%s'" %
+            msg = (u"'%s' did not contain '%s'" %
                    (unicode(response_dict['value']), unicode(value)))
             self.assertIn(value, response_dict['value'], msg)
 

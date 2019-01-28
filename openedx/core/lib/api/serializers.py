@@ -68,4 +68,4 @@ class UsageKeyField(serializers.Field):
         try:
             return UsageKey.from_string(data)
         except InvalidKeyError as ex:
-            raise serializers.ValidationError("Invalid usage key: {msg}".format(msg=ex.msg))
+            raise serializers.ValidationError(u"Invalid usage key: {msg}".format(msg=ex.msg))

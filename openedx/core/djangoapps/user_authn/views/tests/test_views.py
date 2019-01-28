@@ -331,7 +331,7 @@ class LoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMixin, ModuleSto
     @ddt.unpack
     def test_login_and_registration_form(self, url_name, initial_mode):
         response = self.client.get(reverse(url_name))
-        expected_data = '"initial_mode": "{mode}"'.format(mode=initial_mode)
+        expected_data = u'"initial_mode": "{mode}"'.format(mode=initial_mode)
         self.assertContains(response, expected_data)
 
     @ddt.data("signin_user", "register_user")
@@ -594,7 +594,7 @@ class LoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMixin, ModuleSto
         tpa_hint = self.hidden_enabled_provider.provider_id
         params = [("next", "/courses/something/?tpa_hint={0}".format(tpa_hint))]
         response = self.client.get(reverse('signin_user'), params, HTTP_ACCEPT="text/html")
-        self.assertContains(response, '"third_party_auth_hint": "{0}"'.format(tpa_hint))
+        self.assertContains(response, u'"third_party_auth_hint": "{0}"'.format(tpa_hint))
 
         tpa_hint = self.hidden_disabled_provider.provider_id
         params = [("next", "/courses/something/?tpa_hint={0}".format(tpa_hint))]
@@ -637,7 +637,7 @@ class LoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMixin, ModuleSto
         tpa_hint = self.hidden_enabled_provider.provider_id
         params = [("next", "/courses/something/?tpa_hint={0}".format(tpa_hint))]
         response = self.client.get(reverse(url_name), params, HTTP_ACCEPT="text/html")
-        self.assertContains(response, '"third_party_auth_hint": "{0}"'.format(tpa_hint))
+        self.assertContains(response, u'"third_party_auth_hint": "{0}"'.format(tpa_hint))
 
         # Even disabled providers in the query string will override THIRD_PARTY_AUTH_HINT
         tpa_hint = self.hidden_disabled_provider.provider_id
@@ -703,7 +703,7 @@ class LoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMixin, ModuleSto
                 line_break=HTML('<br/>'),
                 enterprise_name=ec_name,
                 platform_name=settings.PLATFORM_NAME,
-                privacy_policy_link_start=HTML("<a href='{pp_url}' target='_blank'>").format(
+                privacy_policy_link_start=HTML(u"<a href='{pp_url}' target='_blank'>").format(
                     pp_url=settings.MKTG_URLS.get('PRIVACY', 'https://www.edx.org/edx-privacy-policy')
                 ),
                 privacy_policy_link_end=HTML("</a>"),
@@ -865,5 +865,5 @@ class AccountCreationTestCaseWithSiteOverrides(SiteMixin, TestCase):
         ALLOW_PUBLIC_ACCOUNT_CREATION flag is turned off
         """
         response = self.client.get(reverse('signin_user'))
-        self.assertNotIn('<a class="btn-neutral" href="/register?next=%2Fdashboard">Register</a>',
-                         response.content)
+        self.assertNotIn(u'<a class="btn-neutral" href="/register?next=%2Fdashboard">Register</a>',
+                         response.content.decode(response.charset))

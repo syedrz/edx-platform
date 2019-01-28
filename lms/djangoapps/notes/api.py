@@ -71,7 +71,7 @@ def api_request(request, course_id, **kwargs):
         raise Http404
 
     if resource_method not in list(resource.keys()):
-        log.debug('Resource "{0}" does not support method "{1}"'.format(resource_name, resource_method))
+        log.debug(u'Resource "{0}" does not support method "{1}"'.format(resource_name, resource_method))
         raise Http404
 
     # Execute the action associated with the resource

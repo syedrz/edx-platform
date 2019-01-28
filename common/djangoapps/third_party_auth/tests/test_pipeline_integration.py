@@ -350,9 +350,9 @@ class UserDetailsForceSyncTestCase(testutil.TestCase, test.TestCase):
         self.old_username = self.user.username
         self.old_fullname = self.user.profile.name
         self.details = {
-            'email': 'new+{}'.format(self.user.email),
-            'username': 'new_{}'.format(self.user.username),
-            'fullname': 'Grown Up {}'.format(self.user.profile.name),
+            'email': u'new+{}'.format(self.user.email),
+            'username': u'new_{}'.format(self.user.username),
+            'fullname': u'Grown Up {}'.format(self.user.profile.name),
             'country': 'PK',
             'non_existing_field': 'value',
         }

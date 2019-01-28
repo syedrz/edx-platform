@@ -1,3 +1,4 @@
+# pylint: disable=unicode-format-string
 # coding=utf-8
 
 """
@@ -18,12 +19,12 @@ from .utils.envs import Env
 from .utils.timer import timed
 
 ALL_SYSTEMS = 'lms,cms,common,openedx,pavelib'
-JUNIT_XML_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
+JUNIT_XML_TEMPLATE = u"""<?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="{name}" tests="1" errors="0" failures="{failure_count}" skip="0">
 <testcase classname="pavelib.quality" name="{name}" time="{seconds}">{failure_element}</testcase>
 </testsuite>
 """
-JUNIT_XML_FAILURE_TEMPLATE = '<failure message={message}/>'
+JUNIT_XML_FAILURE_TEMPLATE = u'<failure message={message}/>'
 START_TIME = datetime.utcnow()
 
 
@@ -97,7 +98,7 @@ def find_fixme(options):
         apps_list = ' '.join(top_python_dirs(system))
 
         cmd = (
-            "pylint --disable all --enable=fixme "
+            u"pylint --disable all --enable=fixme "
             "--output-format=parseable {apps} "
             "> {report_dir}/pylint_fixme.report".format(
                 apps=apps_list,
@@ -139,7 +140,7 @@ def _get_pylint_violations(systems=ALL_SYSTEMS.split(','), errors_only=False, cl
         system_report = report_dir / 'pylint.report'
         if clean or not system_report.exists():
             sh(
-                "pylint {flags} --output-format=parseable {apps} "
+                u"pylint {flags} --output-format=parseable {apps} "
                 "> {report_dir}/pylint.report".format(
                     flags=" ".join(flags),
                     apps=apps_list,
@@ -190,7 +191,7 @@ def run_pylint(options):
     if num_violations < lower_violations_limit > -1:
         fail_quality(
             result_name,
-            "FAILURE: Too few pylint violations. "
+            u"FAILURE: Too few pylint violations. "
             "Expected to see at least {lower_limit} pylint violations. "
             "Either pylint is not running correctly -or- "
             "the limits should be lowered and/or the lower limit should be removed.".format(
@@ -202,7 +203,7 @@ def run_pylint(options):
     if num_violations > upper_violations_limit > -1:
         fail_quality(
             result_name,
-            "FAILURE: Too many pylint violations. "
+            u"FAILURE: Too many pylint violations. "
             "The limit is {upper_limit}.".format(upper_limit=upper_violations_limit)
         )
     else:
@@ -331,7 +332,7 @@ def run_complexity():
     print("--> Calculating cyclomatic complexity of python files...")
     try:
         sh(
-            "radon cc {system_string} --total-average > {complexity_report}".format(
+            u"radon cc {system_string} --total-average > {complexity_report}".format(
                 system_string=system_string,
                 complexity_report=complexity_report
             )
@@ -369,7 +370,7 @@ def run_eslint(options):
     violations_limit = int(getattr(options, 'limit', -1))
 
     sh(
-        "nodejs --max_old_space_size=4096 node_modules/.bin/eslint "
+        u"nodejs --max_old_space_size=4096 node_modules/.bin/eslint "
         "--ext .js --ext .jsx --format=compact . | tee {eslint_report}".format(
             eslint_report=eslint_report
         ),
@@ -381,7 +382,7 @@ def run_eslint(options):
     except TypeError:
         fail_quality(
             'eslint',
-            "FAILURE: Number of eslint violations could not be found in {eslint_report}".format(
+            u"FAILURE: Number of eslint violations could not be found in {eslint_report}".format(
                 eslint_report=eslint_report
             )
         )
@@ -393,7 +394,7 @@ def run_eslint(options):
     if num_violations > violations_limit > -1:
         fail_quality(
             'eslint',
-            "FAILURE: Too many eslint violations ({count}).\nThe limit is {violations_limit}.".format(
+            u"FAILURE: Too many eslint violations ({count}).\nThe limit is {violations_limit}.".format(
                 count=num_violations, violations_limit=violations_limit
             )
         )
@@ -411,7 +412,7 @@ def _get_stylelint_violations():
     formatter = 'node_modules/stylelint-formatter-pretty'
 
     sh(
-        "stylelint **/*.scss --custom-formatter={formatter} | tee {stylelint_report}".format(
+        u"stylelint **/*.scss --custom-formatter={formatter} | tee {stylelint_report}".format(
             formatter=formatter,
             stylelint_report=stylelint_report,
         ),
@@ -423,7 +424,7 @@ def _get_stylelint_violations():
     except TypeError:
         fail_quality(
             'stylelint',
-            "FAILURE: Number of stylelint violations could not be found in {stylelint_report}".format(
+            u"FAILURE: Number of stylelint violations could not be found in {stylelint_report}".format(
                 stylelint_report=stylelint_report
             )
         )
@@ -450,7 +451,7 @@ def run_stylelint(options):
     if num_violations > violations_limit > -1:
         fail_quality(
             'stylelint',
-            "FAILURE: Stylelint failed with too many violations: ({count}).\nThe limit is {violations_limit}.".format(
+            u"FAILURE: Stylelint failed with too many violations: ({count}).\nThe limit is {violations_limit}.".format(
                 count=num_violations,
                 violations_limit=violations_limit,
             )
@@ -493,7 +494,7 @@ def run_xsslint(options):
     _prepare_report_dir(xsslint_report_dir)
 
     sh(
-        "{repo_root}/scripts/xsslint/{xsslint_script} --rule-totals --config={cfg_module} >> {xsslint_report}".format(
+        u"{repo_root}/scripts/xsslint/{xsslint_script} --rule-totals --config={cfg_module} >> {xsslint_report}".format(
             repo_root=Env.REPO_ROOT,
             xsslint_script=xsslint_script,
             xsslint_report=xsslint_report,
@@ -519,7 +520,7 @@ def run_xsslint(options):
     except TypeError:
         fail_quality(
             'xsslint',
-            "FAILURE: Number of {xsslint_script} violations could not be found in {xsslint_report}".format(
+            u"FAILURE: Number of {xsslint_script} violations could not be found in {xsslint_report}".format(
                 xsslint_script=xsslint_script, xsslint_report=xsslint_report
             )
         )
@@ -545,14 +546,14 @@ def run_xsslint(options):
         for threshold_key in threshold_keys:
             if threshold_key not in xsslint_counts['rules']:
                 error_message += (
-                    "\nNumber of {xsslint_script} violations for {rule} could not be found in "
+                    u"\nNumber of {xsslint_script} violations for {rule} could not be found in "
                     "{xsslint_report}."
                 ).format(
                     xsslint_script=xsslint_script, rule=threshold_key, xsslint_report=xsslint_report
                 )
             elif violation_thresholds['rules'][threshold_key] < xsslint_counts['rules'][threshold_key]:
                 error_message += \
-                    "\nToo many {rule} violations ({count}).\nThe {rule} limit is {violations_limit}.".format(
+                    u"\nToo many {rule} violations ({count}).\nThe {rule} limit is {violations_limit}.".format(
                         rule=threshold_key, count=xsslint_counts['rules'][threshold_key],
                         violations_limit=violation_thresholds['rules'][threshold_key],
                     )
@@ -560,7 +561,7 @@ def run_xsslint(options):
     if error_message:
         fail_quality(
             'xsslint',
-            "FAILURE: XSSLinter Failed.\n{error_message}\n"
+            u"FAILURE: XSSLinter Failed.\n{error_message}\n"
             "See {xsslint_report} or run the following command to hone in on the problem:\n"
             "  ./scripts/xss-commit-linter.sh -h".format(
                 error_message=error_message, xsslint_report=xsslint_report
@@ -583,7 +584,7 @@ def run_xsscommitlint():
     _prepare_report_dir(xsscommitlint_report_dir)
 
     sh(
-        "{repo_root}/scripts/{xsscommitlint_script} | tee {xsscommitlint_report}".format(
+        u"{repo_root}/scripts/{xsscommitlint_script} | tee {xsscommitlint_report}".format(
             repo_root=Env.REPO_ROOT,
             xsscommitlint_script=xsscommitlint_script,
             xsscommitlint_report=xsscommitlint_report,
@@ -598,7 +599,7 @@ def run_xsscommitlint():
     except TypeError:
         fail_quality(
             'xsscommitlint',
-            "FAILURE: Number of {xsscommitlint_script} violations could not be found in {xsscommitlint_report}".format(
+            u"FAILURE: Number of {xsscommitlint_script} violations could not be found in {xsscommitlint_report}".format(
                 xsscommitlint_script=xsscommitlint_script, xsscommitlint_report=xsscommitlint_report
             )
         )
@@ -615,7 +616,7 @@ def run_xsscommitlint():
     sh(u"cat {metrics_report}".format(metrics_report=metrics_report), ignore_error=True)
     if num_violations:
         fail_quality(
-            'xsscommitlint',
+            u'xsscommitlint',
             "FAILURE: XSSCommitLinter Failed.\n{error_message}\n"
             "See {xsscommitlint_report} or run the following command to hone in on the problem:\n"
             "  ./scripts/xss-commit-linter.sh -h".format(
@@ -881,7 +882,7 @@ def run_diff_quality(
     """
     try:
         sh(
-            "diff-quality --violations={type} "
+            u"diff-quality --violations={type} "
             "{reports} {percentage_string} {compare_branch_string} "
             "--html-report {dquality_dir}/diff_quality_{type}.html ".format(
                 type=violations_type,

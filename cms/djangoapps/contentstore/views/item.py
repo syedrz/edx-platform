@@ -368,8 +368,8 @@ def xblock_view_handler(request, usage_key_string, view_name):
                     }
             except ValueError:
                 return HttpResponse(
-                    content="Couldn't parse paging parameters: enable_paging: "
-                            "{0}, page_number: {1}, page_size: {2}".format(
+                    content=u"Couldn't parse paging parameters: enable_paging: "
+                            "{0}, page_number: {1}, page_size: {2}".format(  # pylint: disable=unicode-format-string
                                 request.GET.get('enable_paging', 'false'),
                                 request.GET.get('page_number', 0),
                                 request.GET.get('page_size', 0)
@@ -679,7 +679,7 @@ def _create_item(request):
         # Only these categories are supported at this time.
         if category not in ['html', 'problem', 'video']:
             return HttpResponseBadRequest(
-                "Category '%s' not supported for Libraries" % category, content_type='text/plain'
+                u"Category '%s' not supported for Libraries" % category, content_type='text/plain'
             )
 
     created_block = create_xblock(
@@ -811,7 +811,7 @@ def _move_item(source_usage_key, target_parent_usage_key, user, target_index=Non
         )
 
         log.info(
-            'MOVE: %s moved from %s to %s at %d index',
+            u'MOVE: %s moved from %s to %s at %d index',
             unicode(source_usage_key),
             unicode(source_parent.location),
             unicode(target_parent_usage_key),
@@ -852,9 +852,9 @@ def _duplicate_item(parent_usage_key, duplicate_source_usage_key, user, display_
             duplicate_metadata['display_name'] = display_name
         else:
             if source_item.display_name is None:
-                duplicate_metadata[u'display_name'] = _("Duplicate of {0}").format(source_item.category)
+                duplicate_metadata['display_name'] = _(u"Duplicate of {0}").format(source_item.category)
             else:
-                duplicate_metadata['display_name'] = _("Duplicate of '{0}'").format(source_item.display_name)
+                duplicate_metadata['display_name'] = _(u"Duplicate of '{0}'").format(source_item.display_name)
 
         asides_to_create = []
         for aside in source_item.runtime.get_asides(source_item):

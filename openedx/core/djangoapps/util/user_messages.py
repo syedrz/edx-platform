@@ -200,9 +200,9 @@ class PageLevelMessages(UserMessageCollection):
             title_area = ''
         if dismissable:
             dismiss_button = HTML(
-                '<div class="message-actions">'
+                u'<div class="message-actions">'
                 '<button class="btn-link action-dismiss">'
-                '<span class="sr">{dismiss_text}</span>'
+                '<span class="sr">{dismiss_text}</span>'  # pylint: disable=unicode-format-string
                 '<span class="icon fa fa-times" aria-hidden="true"></span></button>'
                 '</div>'
             ).format(

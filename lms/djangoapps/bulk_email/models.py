@@ -170,7 +170,7 @@ class CohortTarget(Target):
             cohort = get_cohort_by_name(name=cohort_name, course_key=course_id)
         except CourseUserGroup.DoesNotExist:
             raise ValueError(
-                "Cohort {cohort} does not exist in course {course_id}".format(
+                u"Cohort {cohort} does not exist in course {course_id}".format(
                     cohort=cohort_name,
                     course_id=course_id
                 )
@@ -216,7 +216,7 @@ class CourseModeTarget(Target):
             validate_course_mode(unicode(course_id), mode_slug, include_expired=True)
         except CourseModeNotFoundError:
             raise ValueError(
-                "Track {track} does not exist in course {course_id}".format(
+                u"Track {track} does not exist in course {course_id}".format(
                     track=mode_slug,
                     course_id=course_id
                 )
@@ -257,7 +257,7 @@ class CourseEmail(Email):
             target_split = target.split(':', 1)
             # Ensure our desired target exists
             if target_split[0] not in EMAIL_TARGETS:
-                fmt = 'Course email being sent to unrecognized target: "{target}" for "{course}", subject "{subject}"'
+                fmt = u'Course email being sent to unrecognized target: "{target}" for "{course}", subject "{subject}"'  # pylint: disable=unicode-format-string,line-too-long
                 msg = fmt.format(target=target, course=course_id, subject=subject)
                 raise ValueError(msg)
             elif target_split[0] == SEND_TO_COHORT:

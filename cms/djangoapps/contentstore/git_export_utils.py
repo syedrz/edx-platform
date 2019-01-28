@@ -62,7 +62,7 @@ def cmd_log(cmd, cwd):
     """
     output = subprocess.check_output(cmd, cwd=cwd, stderr=subprocess.STDOUT)
     log.debug(u'Command was: {0!r}. '
-              'Working directory was: {1!r}'.format(' '.join(cmd), cwd))
+              'Working directory was: {1!r}'.format(' '.join(cmd), cwd))  # pylint: disable=unicode-format-string
     log.debug(u'Command output was: {0!r}'.format(output))
     return output
 

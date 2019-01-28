@@ -286,7 +286,7 @@ class BaseGroupConfigurationsTest(ContainerBase):
             self.assertEqual("Access is not restricted", visibility_editor.current_groups_message)
         else:
             self.assertEqual(
-                "Access is restricted to: {groups}".format(groups=expected_current_groups),
+                u"Access is restricted to: {groups}".format(groups=expected_current_groups),
                 visibility_editor.current_groups_message
             )
 

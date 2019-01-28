@@ -220,7 +220,7 @@ def video_images_handler(request, course_key_string, edx_video_id=None):
     with closing(image_file):
         image_url = update_video_image(edx_video_id, course_key_string, image_file, image_file.name)
         LOGGER.info(
-            'VIDEOS: Video image uploaded for edx_video_id [%s] in course [%s]', edx_video_id, course_key_string
+            u'VIDEOS: Video image uploaded for edx_video_id [%s] in course [%s]', edx_video_id, course_key_string
         )
 
     return JsonResponse({'image_url': image_url})
@@ -791,7 +791,7 @@ def send_video_status_update(updates):
     for update in updates:
         update_video_status(update.get('edxVideoId'), update.get('status'))
         LOGGER.info(
-            'VIDEOS: Video status update with id [%s], status [%s] and message [%s]',
+            u'VIDEOS: Video status update with id [%s], status [%s] and message [%s]',
             update.get('edxVideoId'),
             update.get('status'),
             update.get('message')

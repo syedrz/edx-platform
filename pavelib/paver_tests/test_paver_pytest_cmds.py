@@ -1,3 +1,4 @@
+# pylint: disable=unicode-format-string
 """
 Tests for the pytest paver commands themselves.
 Run just this test with: paver test_lib -t pavelib/paver_tests/test_paver_pytest_cmds.py

@@ -265,17 +265,17 @@ class TestFooter(CacheIsolationTestCase):
     def _verify_language_selector(self, response, selected_language):
         """ Verify that the language selector is present and correctly configured."""
         # Verify the selector is included
-        content = response.content
+        content = response.content.decode(response.charset)
         self.assertIn('footer-language-selector', content)
 
         # Verify the correct language is selected
-        self.assertIn('<option value="{}" selected="selected">'.format(selected_language), content)
+        self.assertIn(u'<option value="{}" selected="selected">'.format(selected_language), content)
 
         # Verify the language choices
         for language in released_languages():
             if language.code == selected_language:
                 continue
-            self.assertIn(u'<option value="{}">'.format(language.code), response.content.decode(response.charset))
+            self.assertIn(u'<option value="{}">'.format(language.code), content)
 
 
 class TestIndex(SiteMixin, TestCase):

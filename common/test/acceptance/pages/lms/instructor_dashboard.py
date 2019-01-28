@@ -714,7 +714,7 @@ class DiscussionManagementSection(PageObject):
         """
         Returns the status for form's save button, enabled or disabled.
         """
-        save_button_css = '%s %s' % (self.discussion_form_selectors[key], '.action-save')
+        save_button_css = u'%s %s' % (self.discussion_form_selectors[key], '.action-save')
         disabled = self.q(css=self._bounded_selector(save_button_css)).attrs('disabled')
         return disabled[0] == 'true'
 
@@ -729,7 +729,7 @@ class DiscussionManagementSection(PageObject):
         """
         Returns the text of discussion topic headings if it exists, otherwise return False.
         """
-        form_heading_css = '%s %s' % (self.discussion_form_selectors[key], '.subsection-title')
+        form_heading_css = u'%s %s' % (self.discussion_form_selectors[key], '.subsection-title')
         discussion_heading = self.q(css=self._bounded_selector(form_heading_css))
 
         if len(discussion_heading) == 0:
@@ -753,7 +753,7 @@ class DiscussionManagementSection(PageObject):
         """
         Saves the discussion topics.
         """
-        save_button_css = '%s %s' % (self.discussion_form_selectors[key], '.action-save')
+        save_button_css = u'%s %s' % (self.discussion_form_selectors[key], '.action-save')
         self.q(css=self._bounded_selector(save_button_css)).first.click()
 
     def always_inline_discussion_selected(self):

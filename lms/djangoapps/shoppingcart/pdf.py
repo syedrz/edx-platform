@@ -381,7 +381,7 @@ class PDFInvoice(object):
         if self.is_invoice:
             # only print TaxID if we are generating an Invoice
             totals_data.append(
-                ['', '{tax_label}:  {tax_id}'.format(tax_label=self.tax_label, tax_id=self.tax_id)]
+                ['', u'{tax_label}:  {tax_id}'.format(tax_label=self.tax_label, tax_id=self.tax_id)]
             )
 
         heights = 8 * mm

@@ -77,7 +77,7 @@ class AccountSettingsPage(FieldsMixin, PageObject):
         """ Check that if hovering over the order history row shows the
         order detail link or not.
         """
-        return self.q(css='.u-field-{} .u-field-{}'.format(field_id, 'link')).visible
+        return self.q(css=u'.u-field-{} .u-field-{}'.format(field_id, 'link')).visible
 
     @property
     def is_delete_button_visible(self):

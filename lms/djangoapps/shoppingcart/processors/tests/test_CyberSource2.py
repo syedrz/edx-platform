@@ -80,7 +80,7 @@ class CyberSource2Test(TestCase):
         # Parameters determined by the order model
         self.assertEqual(params['amount'], '10.00')
         self.assertEqual(params['currency'], 'usd')
-        self.assertEqual(params['orderNumber'], 'OrderId: {order_id}'.format(order_id=self.order.id))
+        self.assertEqual(params['orderNumber'], u'OrderId: {order_id}'.format(order_id=self.order.id))
         self.assertEqual(params['reference_number'], self.order.id)
 
         # Parameters determined by the Django (test) settings

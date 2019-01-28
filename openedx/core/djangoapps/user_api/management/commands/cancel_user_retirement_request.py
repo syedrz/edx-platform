@@ -42,8 +42,8 @@ class Command(BaseCommand):
         # Check if the user has started the retirement process -or- not.
         if retirement_status.current_state.state_name != 'PENDING':
             raise CommandError(
-                "Retirement requests can only be cancelled for users in the PENDING state."
-                " Current request state for '{}': {}".format(
+                u"Retirement requests can only be cancelled for users in the PENDING state."
+                " Current request state for '{}': {}".format(  # pylint: disable=unicode-format-string
                     email_address,
                     retirement_status.current_state.state_name
                 )

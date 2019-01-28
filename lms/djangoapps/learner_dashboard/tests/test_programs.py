@@ -215,7 +215,7 @@ class TestProgramDetails(ProgramsApiConfigMixin, CatalogIntegrationMixin, Shared
         self.assertContains(response, 'programData')
         self.assertContains(response, 'urls')
         self.assertContains(response,
-                            '"program_record_url": "{}/records/programs/'.format(CREDENTIALS_PUBLIC_SERVICE_URL))
+                            u'"program_record_url": "{}/records/programs/'.format(CREDENTIALS_PUBLIC_SERVICE_URL))
         self.assertContains(response, 'program_listing_url')
         self.assertContains(response, self.program_data['title'])
         self.assert_programs_tab_present(response)

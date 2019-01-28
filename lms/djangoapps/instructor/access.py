@@ -1,4 +1,4 @@
-"""
+u"""
 Access control operations for use by instructor APIs.
 
 Does not include any access control, be sure to check access before calling.

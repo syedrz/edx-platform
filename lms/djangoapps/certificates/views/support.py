@@ -140,7 +140,7 @@ def _validate_post_params(params):
     try:
         course_key = CourseKey.from_string(params.get("course_key"))
     except InvalidKeyError:
-        msg = _("{course_key} is not a valid course key").format(course_key=params.get("course_key"))
+        msg = _(u"{course_key} is not a valid course key").format(course_key=params.get("course_key"))
         return None, HttpResponseBadRequest(msg)
 
     return {"user": user, "course_key": course_key}, None
@@ -179,7 +179,7 @@ def regenerate_certificate_for_user(request):
     # Check that the course exists
     course = modulestore().get_course(params["course_key"])
     if course is None:
-        msg = _("The course {course_key} does not exist").format(course_key=params["course_key"])
+        msg = _(u"The course {course_key} does not exist").format(course_key=params["course_key"])
         return HttpResponseBadRequest(msg)
 
     # Check that the user is enrolled in the course
@@ -198,7 +198,7 @@ def regenerate_certificate_for_user(request):
         # certificates API.  This may be overkill, but we're logging everything so we can
         # track down unexpected errors.
         log.exception(
-            "Could not regenerate certificates for user %s in course %s",
+            u"Could not regenerate certificates for user %s in course %s",
             params["user"].id,
             params["course_key"]
         )
@@ -208,7 +208,7 @@ def regenerate_certificate_for_user(request):
     _deactivate_invalidation(certificate)
 
     log.info(
-        "Started regenerating certificates for user %s in course %s from the support page.",
+        u"Started regenerating certificates for user %s in course %s from the support page.",
         params["user"].id, params["course_key"]
     )
     return HttpResponse(200)
@@ -247,7 +247,7 @@ def generate_certificate_for_user(request):
         # Check that the course exists
         CourseOverview.get_from_id(params["course_key"])
     except CourseOverview.DoesNotExist:
-        msg = _("The course {course_key} does not exist").format(course_key=params["course_key"])
+        msg = _(u"The course {course_key} does not exist").format(course_key=params["course_key"])
         return HttpResponseBadRequest(msg)
     else:
         # Check that the user is enrolled in the course

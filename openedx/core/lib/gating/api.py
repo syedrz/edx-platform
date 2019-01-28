@@ -182,7 +182,7 @@ def add_prerequisite(course_key, prereq_content_key):
     """
     milestone = milestones_api.add_milestone(
         {
-            'name': _('Gating milestone for {usage_key}').format(usage_key=unicode(prereq_content_key)),
+            'name': _(u'Gating milestone for {usage_key}').format(usage_key=unicode(prereq_content_key)),
             'namespace': "{usage_key}{qualifier}".format(
                 usage_key=prereq_content_key,
                 qualifier=GATING_NAMESPACE_QUALIFIER

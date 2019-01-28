@@ -218,7 +218,7 @@ class DashboardPage(PageObject, HelpMixin):
         List all the courses found on the page's list of courses.
         """
         # Workaround Selenium/Firefox bug: `.text` property is broken on invisible elements
-        tab_selector = '#course-index-tabs .{} a'.format('archived-courses-tab' if archived else 'courses-tab')
+        tab_selector = u'#course-index-tabs .{} a'.format('archived-courses-tab' if archived else 'courses-tab')
         self.wait_for_element_presence(tab_selector, "Courses Tab")
         self.q(css=tab_selector).click()
         div2info = lambda element: {
@@ -228,7 +228,7 @@ class DashboardPage(PageObject, HelpMixin):
             'run': element.find_element_by_css_selector('.course-run .value').text,
             'url': element.find_element_by_css_selector('a.course-link').get_attribute('href'),
         }
-        course_list_selector = '.{} li.course-item'.format('archived-courses' if archived else 'courses')
+        course_list_selector = u'.{} li.course-item'.format('archived-courses' if archived else 'courses')
         return self.q(css=course_list_selector).map(div2info).results
 
     def has_course(self, org, number, run, archived=False):

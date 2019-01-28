@@ -44,7 +44,7 @@ class GitImportErrorNoDir(GitImportError):
     def __init__(self, repo_dir):
         super(GitImportErrorNoDir, self).__init__(
             _(
-                "Path {0} doesn't exist, please create it, "
+                u"Path {0} doesn't exist, please create it, "
                 "or configure a different path with "
                 "GIT_REPO_DIR"
             ).format(repo_dir)
@@ -256,7 +256,7 @@ def add_repo(repo, rdir_in, branch=None):
         log.exception(u'Unable to determine branch: %r', ex.output)
         raise GitImportErrorBadRepo()
 
-    ret_git += '{0}Branch: {1}'.format('   \n', branch)
+    ret_git += u'{0}Branch: {1}'.format('   \n', branch)
 
     # Get XML logging logger and capture debug to parse results
     output = StringIO.StringIO()

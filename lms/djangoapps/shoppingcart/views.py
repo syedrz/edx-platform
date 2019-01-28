@@ -661,8 +661,8 @@ def _get_verify_flow_redirect(order):
         if cert_items.count() > 1:
             log.warning(
                 u"More than one certificate item in order %s; "
-                u"continuing with the payment/verification flow for "
-                u"the first order item (course %s).",
+                "continuing with the payment/verification flow for "
+                "the first order item (course %s).",  # pylint: disable=unicode-format-string
                 order.id, cert_items[0].course_id
             )
 
@@ -950,7 +950,7 @@ def _show_receipt_html(request, order):
         'currency': settings.PAID_COURSE_REGISTRATION_CURRENCY[0],
         'total_registration_codes': total_registration_codes,
         'reg_code_info_list': reg_code_info_list,
-        'order_purchase_date': order.purchase_time.strftime("%B %d, %Y"),
+        'order_purchase_date': order.purchase_time.strftime(u"%B %d, %Y"),
     }
 
     # We want to have the ability to override the default receipt page when
@@ -1022,8 +1022,8 @@ def csv_report(request):
         items = report.rows()
 
         response = HttpResponse(content_type='text/csv')
-        filename = "purchases_report_{}.csv".format(datetime.datetime.now(pytz.UTC).strftime("%Y-%m-%d-%H-%M-%S"))
-        response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+        filename = u"purchases_report_{}.csv".format(datetime.datetime.now(pytz.UTC).strftime(u"%Y-%m-%d-%H-%M-%S"))
+        response['Content-Disposition'] = u'attachment; filename="{}"'.format(filename)
         report.write_csv(response)
         return response
 

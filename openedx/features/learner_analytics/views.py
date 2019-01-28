@@ -289,7 +289,7 @@ class LearnerAnalyticsView(View):
                 .format(base_url=settings.ANALYTICS_API_URL,
                         username=username,
                         course_key=urllib.quote_plus(unicode(course_key)))
-            headers = {'Authorization': 'Token {token}'.format(token=settings.ANALYTICS_API_KEY)}
+            headers = {'Authorization': u'Token {token}'.format(token=settings.ANALYTICS_API_KEY)}
             response = requests.get(url=url, headers=headers)
             data = response.json()
 

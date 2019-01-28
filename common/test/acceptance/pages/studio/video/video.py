@@ -607,7 +607,7 @@ class VideoComponentPage(VideoPage):
         """
         if message_type == 'status':
             self.wait_for_element_visibility(CLASS_SELECTORS[message_type],
-                                             '{} message is Visible'.format(message_type.title()))
+                                             u'{} message is Visible'.format(message_type.title()))
 
         return self.q(css=CLASS_SELECTORS[message_type]).text[0]
 
@@ -653,7 +653,7 @@ class VideoComponentPage(VideoPage):
         """
         Clear video url fields.
         """
-        script = """
+        script = u"""
         $('{selector}')
             .prop('disabled', false)
             .removeClass('is-disabled')

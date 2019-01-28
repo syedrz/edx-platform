@@ -1079,10 +1079,10 @@ class TestProblemReportSplitTestContent(TestReportMixin, TestConditionalContent,
         self.course = CourseFactory.create(
             grading_policy={
                 "GRADER": [{
-                    "type": "Homework %d" % i,
+                    "type": u"Homework %d" % i,
                     "min_count": 1,
                     "drop_count": 0,
-                    "short_label": "HW %d" % i,
+                    "short_label": u"HW %d" % i,
                     "weight": 1.0
                 } for i in xrange(1, grader_num)]
             }

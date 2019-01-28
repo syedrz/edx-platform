@@ -1,3 +1,4 @@
+# pylint: disable=unicode-format-string
 """
 A class used for defining and running test suites
 """
@@ -123,10 +124,10 @@ class TestSuite(object):
         Writes a list of failed_suites to sys.stderr
         """
         if self.failed_suites:
-            msg = colorize('red', "\n\n{bar}\nTests failed in the following suites:\n* ".format(bar="=" * 48))
+            msg = colorize('red', u"\n\n{bar}\nTests failed in the following suites:\n* ".format(bar="=" * 48))
             msg += colorize('red', '\n* '.join([s.root for s in self.failed_suites]) + '\n\n')
         else:
-            msg = colorize('green', "\n\n{bar}\nNo test failures ".format(bar="=" * 48))
+            msg = colorize('green', u"\n\n{bar}\nNo test failures ".format(bar="=" * 48))
 
         print(msg)
 

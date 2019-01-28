@@ -62,7 +62,7 @@ def validate_video_image(image_file, skip_aspect_ratio=False):
         image_file_aspect_ratio = abs(image_file_width / float(image_file_height) - settings.VIDEO_IMAGE_ASPECT_RATIO)
         if image_file_width < settings.VIDEO_IMAGE_MIN_WIDTH or image_file_height < settings.VIDEO_IMAGE_MIN_HEIGHT:
             error = _(u'Recommended image resolution is {image_file_max_width}x{image_file_max_height}. '
-                      'The minimum resolution is {image_file_min_width}x{image_file_min_height}.').format(
+                      u'The minimum resolution is {image_file_min_width}x{image_file_min_height}.').format(
                 image_file_max_width=settings.VIDEO_IMAGE_MAX_WIDTH,
                 image_file_max_height=settings.VIDEO_IMAGE_MAX_HEIGHT,
                 image_file_min_width=settings.VIDEO_IMAGE_MIN_WIDTH,
@@ -106,7 +106,7 @@ def validate_and_update_video_image(course_key_string, edx_video_id, image_file,
     error = validate_video_image(image_file, skip_aspect_ratio=True)
     if error:
         LOGGER.info(
-            'VIDEOS: Scraping youtube video thumbnail failed for edx_video_id [%s] in course [%s] with error: %s',
+            u'VIDEOS: Scraping youtube video thumbnail failed for edx_video_id [%s] in course [%s] with error: %s',
             edx_video_id,
             course_key_string,
             error
@@ -115,7 +115,7 @@ def validate_and_update_video_image(course_key_string, edx_video_id, image_file,
 
     update_video_image(edx_video_id, course_key_string, image_file, image_filename)
     LOGGER.info(
-        'VIDEOS: Scraping youtube video thumbnail for edx_video_id [%s] in course [%s]', edx_video_id, course_key_string
+        u'VIDEOS: Scraping youtube video thumbnail for edx_video_id [%s] in course [%s]', edx_video_id, course_key_string
     )
 
 

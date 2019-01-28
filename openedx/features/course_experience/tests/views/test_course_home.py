@@ -526,10 +526,10 @@ class TestCourseHomePageAccess(CourseHomePageTestCase):
 
         response = self.client.get(url)
 
-        expiration_date = strftime_localized(course.start + timedelta(weeks=4), '%b. %-d, %Y')
+        expiration_date = strftime_localized(course.start + timedelta(weeks=4), u'%b. %-d, %Y')
         expected_params = QueryDict(mutable=True)
         course_name = CourseOverview.get_from_id(course.id).display_name_with_default
-        expected_params['access_response_error'] = 'Access to {run} expired on {expiration_date}'.format(
+        expected_params['access_response_error'] = u'Access to {run} expired on {expiration_date}'.format(
             run=course_name,
             expiration_date=expiration_date
         )

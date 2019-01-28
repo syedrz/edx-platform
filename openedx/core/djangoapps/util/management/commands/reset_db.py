@@ -111,17 +111,17 @@ class Command(BaseCommand):
             connection.set_isolation_level(0)  # autocommit false
             cursor = connection.cursor()
 
-            drop_query = "DROP DATABASE \"%s\";" % database_name
+            drop_query = u"DROP DATABASE \"%s\";" % database_name
             logging.info('Executing... "' + drop_query + '"')
             try:
                 cursor.execute(drop_query)
             except Database.ProgrammingError as e:
                 logging.exception(u"Error: %s" % str(e))
 
-            create_query = "CREATE DATABASE \"%s\"" % database_name
+            create_query = u"CREATE DATABASE \"%s\"" % database_name
             if owner:
-                create_query += " WITH OWNER = \"%s\" " % owner
-            create_query += " ENCODING = 'UTF8'"
+                create_query += u" WITH OWNER = \"%s\" " % owner
+            create_query += u" ENCODING = 'UTF8'"
 
             if engine == 'postgis' and django.VERSION < (1, 9):
                 # For PostGIS 1.5, fetch template name if it exists
@@ -133,7 +133,7 @@ class Command(BaseCommand):
             if settings.DEFAULT_TABLESPACE:
                 create_query += u' TABLESPACE = %s;' % settings.DEFAULT_TABLESPACE
             else:
-                create_query += ';'
+                create_query += u';'
 
             logging.info('Executing... "' + create_query + '"')
             cursor.execute(create_query)

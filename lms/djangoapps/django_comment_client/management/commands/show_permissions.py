@@ -27,8 +27,8 @@ class Command(BaseCommand):
         roles = user.roles.all()
         print(u'{} has %d roles:'.format(user, len(roles)))
         for role in roles:
-            print('\t{}'.format(role))
+            print(u'\t{}'.format(role))
 
         for role in roles:
-            print('{} has permissions: '.format(role))
+            print(u'{} has permissions: '.format(role))
             print(role.permissions.all())

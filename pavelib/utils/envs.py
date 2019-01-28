@@ -251,7 +251,7 @@ class Env(object):
                 django_cmd(
                     system,
                     settings,
-                    "print_setting {django_setting} 2>{log_file}".format(
+                    u"print_setting {django_setting} 2>{log_file}".format(
                         django_setting=django_setting,
                         log_file=cls.PRINT_SETTINGS_LOG_FILE
                     )
@@ -300,8 +300,8 @@ class Env(object):
             env_path = env_path.parent.parent / env_path.basename()
         if not env_path.isfile():
             print(
-                "Warning: could not find environment JSON file "
-                "at '{path}'".format(path=env_path),
+                u"Warning: could not find environment JSON file "
+                "at '{path}'".format(path=env_path),  # pylint: disable=unicode-format-string
                 file=sys.stderr,
             )
             return dict()
@@ -313,8 +313,8 @@ class Env(object):
 
         except ValueError:
             print(
-                "Error: Could not parse JSON "
-                "in {path}".format(path=env_path),
+                u"Error: Could not parse JSON "
+                "in {path}".format(path=env_path),  # pylint: disable=unicode-format-string
                 file=sys.stderr,
             )
             sys.exit(1)

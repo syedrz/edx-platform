@@ -1,3 +1,4 @@
+# pylint: disable=unicode-format-string
 # -*- coding: utf-8 -*-
 """Tests for certificates views. """
 
@@ -157,7 +158,7 @@ class CommonCertificatesTestCase(ModuleStoreTestCase):
         """
         Creates a custom certificate template entry in DB.
         """
-        template_html = """
+        template_html = u"""
             <%namespace name='static' file='static_content.html'/>
             <html>
             <body>
@@ -185,7 +186,7 @@ class CommonCertificatesTestCase(ModuleStoreTestCase):
         """
         Creates a custom certificate template entry in DB.
         """
-        template_html = """
+        template_html = u"""
             <%namespace name='static' file='static_content.html'/>
             <html>
             <body>
@@ -213,7 +214,7 @@ class CommonCertificatesTestCase(ModuleStoreTestCase):
         """
         Creates a custom certificate template entry in DB that includes hours of effort.
         """
-        template_html = """
+        template_html = u"""
             <%namespace name='static' file='static_content.html'/>
             <html>
             <body>
@@ -409,19 +410,20 @@ class CertificatesViewsTests(CommonCertificatesTestCase, CacheIsolationTestCase)
             course_id=unicode(self.course.id)
         )
         response = self.client.get(test_url)
+        content = response.content.decode(response.charset)
         self.assertIn(
             'a course of study offered by test_organization, an online learning initiative of test organization',
-            response.content
+            content
         )
         self.assertNotIn(
             'a course of study offered by testorg',
-            response.content
+            content
         )
         self.assertIn(
-            '<title>test_organization {} Certificate |'.format(self.course.number, ),
-            response.content
+            u'<title>test_organization {} Certificate |'.format(self.course.number, ),
+            content
         )
-        self.assertIn('logo_test1.png', response.content)
+        self.assertIn('logo_test1.png', content)
 
     @ddt.data(True, False)
     @patch('lms.djangoapps.certificates.views.webview.get_completion_badge')
@@ -518,7 +520,7 @@ class CertificatesViewsTests(CommonCertificatesTestCase, CacheIsolationTestCase)
         )
         # Test an item from user info
         self.assertIn(
-            "{fullname}, you earned a certificate!".format(fullname=self.user.profile.name),
+            u"{fullname}, you earned a certificate!".format(fullname=self.user.profile.name),
             response.content
         )
         # Test an item from social info
@@ -532,7 +534,7 @@ class CertificatesViewsTests(CommonCertificatesTestCase, CacheIsolationTestCase)
         )
         # Test an item from certificate/org info
         self.assertIn(
-            "a course of study offered by {partner_short_name}, "
+            u"a course of study offered by {partner_short_name}, "
             "an online learning initiative of "
             "{partner_long_name}.".format(
                 partner_short_name=short_org_name,
@@ -1163,7 +1165,7 @@ class CertificatesViewsTests(CommonCertificatesTestCase, CacheIsolationTestCase)
             mock_get_org_id,
             mock_get_course_run_details,
     ):
-        """
+        u"""
         Tests custom template search and rendering.
         This test should check template matching when org={org}, course={course}, mode={mode}.
         """
@@ -1415,7 +1417,7 @@ class CertificatesViewsTests(CommonCertificatesTestCase, CacheIsolationTestCase)
             mock_get_org_id,
             mock_get_course_run_details,
     ):
-        """
+        u"""
         Tests custom template search if we have a single template for a course mode.
         This test should check template matching when org=null, course=Null, mode={mode}.
         """
@@ -1569,7 +1571,7 @@ class CertificatesViewsTests(CommonCertificatesTestCase, CacheIsolationTestCase)
             mock_get_org_id.return_value = None
             response = self.client.get(test_url)
             self.assertContains(
-                response, '<img class="custom-logo" src="{}certificate_template_assets/32/test_logo.png" />'.format(
+                response, u'<img class="custom-logo" src="{}certificate_template_assets/32/test_logo.png" />'.format(
                     settings.MEDIA_URL
                 )
             )

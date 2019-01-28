@@ -200,12 +200,12 @@ class TestCourseGradeFactory(GradeTestBase):
                 'Homework': {
                     'category': 'Homework',
                     'percent': 0.25,
-                    'detail': 'Homework = 25.00% of a possible 100.00%',
+                    'detail': 'Homework = 25.00% of a possible 100.00%',   # pylint: disable=unicode-format-string
                 },
                 'NoCredit': {
                     'category': 'NoCredit',
                     'percent': 0.0,
-                    'detail': 'NoCredit = 0.00% of a possible 0.00%',
+                    'detail': 'NoCredit = 0.00% of a possible 0.00%',  # pylint: disable=unicode-format-string
                 }
             },
             'percent': 0.25,

@@ -1,3 +1,4 @@
+# pylint: disable=unicode-format-string
 # -*- coding: utf-8 -*-
 """
 Tests for js_utils.py
@@ -134,7 +135,7 @@ class TestJSUtils(TestCase):
         out = template.render(test_dict=test_dict)
 
         expected_json_for_html = (
-            ur"{&#34;test_bool&#34;: false, &#34;test_number&#34;: 3.5, "
+            r"{&#34;test_bool&#34;: false, &#34;test_number&#34;: 3.5, "
             r"&#34;test_tuple&#34;: [1, 2, 3], &#34;test_string&#34;: "
             r"&#34;test-=&amp;\\;&#39;\&#34;&lt;&gt;\u2603&#34;}"
         )

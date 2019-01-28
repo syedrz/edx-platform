@@ -59,14 +59,14 @@ class EdxNotesTestMixin(UniqueCourseTest):
                         XBlockFixtureDesc(
                             "html",
                             "Test HTML 2",
-                            data="""<p><span class="{}">Annotate this!</span></p>""".format(self.selector)
+                            data=u"""<p><span class="{}">Annotate this!</span></p>""".format(self.selector)
                         ),
                     ),
                     XBlockFixtureDesc("vertical", "Test Unit 2").add_children(
                         XBlockFixtureDesc(
                             "html",
                             "Test HTML 3",
-                            data="""<p><span class="{}">Annotate this!</span></p>""".format(self.selector)
+                            data=u"""<p><span class="{}">Annotate this!</span></p>""".format(self.selector)
                         ),
                     ),
                 ),
@@ -75,7 +75,7 @@ class EdxNotesTestMixin(UniqueCourseTest):
                         XBlockFixtureDesc(
                             "html",
                             "Test HTML 4",
-                            data="""
+                            data=u"""
                                 <p><span class="{}">Annotate this!</span></p>
                             """.format(self.selector)
                         ),
@@ -88,14 +88,14 @@ class EdxNotesTestMixin(UniqueCourseTest):
                         XBlockFixtureDesc(
                             "html",
                             "Test HTML 5",
-                            data="""
+                            data=u"""
                                 <p><span class="{}">Annotate this!</span></p>
                             """.format(self.selector)
                         ),
                         XBlockFixtureDesc(
                             "html",
                             "Test HTML 6",
-                            data="""<p><span class="{}">Annotate this!</span></p>""".format(self.selector)
+                            data=u"""<p><span class="{}">Annotate this!</span></p>""".format(self.selector)
                         ),
                     ),
                 ),

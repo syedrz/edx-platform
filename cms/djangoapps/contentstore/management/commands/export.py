@@ -31,7 +31,7 @@ class Command(BaseCommand):
         try:
             course_key = CourseKey.from_string(options['course_id'])
         except InvalidKeyError:
-            raise CommandError("Invalid course_key: '%s'." % options['course_id'])
+            raise CommandError(u"Invalid course_key: '%s'." % options['course_id'])
 
         if not modulestore().get_course(course_key):
             raise CommandError(u"Course with %s key not found." % options['course_id'])

@@ -104,7 +104,7 @@ class SysadminDashboardView(TemplateView):
             csv_data = read_and_flush()
             yield csv_data
         response = HttpResponse(csv_data(), content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename={0}'.format(
+        response['Content-Disposition'] = u'attachment; filename={0}'.format(
             filename)
         return response
 
@@ -352,7 +352,7 @@ class Courses(SysadminDashboardView):
                 return info
 
         cmd = ['git', 'log', '-1',
-               '--format=format:{ "commit": "%H", "author": "%an %ae", "date": "%ad"}', ]
+               u'--format=format:{ "commit": "%H", "author": "%an %ae", "date": "%ad"}', ]
         try:
             output_json = json.loads(subprocess.check_output(cmd, cwd=gdir))
             info = [output_json['commit'],
@@ -486,7 +486,7 @@ class Courses(SysadminDashboardView):
                     course_found = True
                 except Exception as err:   # pylint: disable=broad-except
                     self.msg += _(
-                        HTML('Error - cannot get course with ID {0}<br/><pre>{1}</pre>')
+                        HTML(u'Error - cannot get course with ID {0}<br/><pre>{1}</pre>')
                     ).format(
                         course_key,
                         escape(str(err))

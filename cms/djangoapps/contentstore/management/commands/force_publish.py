@@ -48,7 +48,7 @@ class Command(BaseCommand):
             print(u"Course versions : {0}".format(versions))
 
             if options['commit']:
-                if query_yes_no("Are you sure to publish the {0} course forcefully?".format(course_key), default="no"):
+                if query_yes_no(u"Are you sure to publish the {0} course forcefully?".format(course_key), default="no"):
                     # publish course forcefully
                     updated_versions = owning_store.force_publish_course(
                         course_key, ModuleStoreEnum.UserID.mgmt_command, options['commit']

@@ -122,8 +122,7 @@ class CohortMembership(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.full_clean(validate_unique=False)
 
-        log.info("Saving CohortMembership for user '%s' in '%s'", self.user.id, self.course_id)
-
+        log.info(u"Saving CohortMembership for user '%s' in '%s'", self.user.id, self.course_id)
         return super(CohortMembership, self).save(force_insert=force_insert,
                                                   force_update=force_update,
                                                   using=using,

@@ -100,7 +100,7 @@ def course_info_to_ccxcon(course_key):
         return
     if not is_valid_url(course.ccx_connector):
         log.error(
-            'ccx connector URL "%s" for course key "%s" is not a valid URL.',
+            u'ccx connector URL "%s" for course key "%s" is not a valid URL.',
             course.ccx_connector, unicode(course_key)
         )
         return

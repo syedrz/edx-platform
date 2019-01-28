@@ -695,7 +695,7 @@ class ProgramDataExtender(object):
                     'variant': bundle_variant
                 })
             except (ConnectionError, SlumberBaseException, Timeout):
-                log.exception('Failed to get discount price for following product SKUs: %s ', ', '.join(skus))
+                log.exception(u'Failed to get discount price for following product SKUs: %s ', ', '.join(skus))
                 self.data.update({
                     'discount_data': {'is_discounted': False}
                 })

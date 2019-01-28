@@ -65,7 +65,7 @@ def register_special_exams(course_key):
     # add/update any exam entries in edx-proctoring
     for timed_exam in timed_exams:
         msg = (
-            'Found {location} as a timed-exam in course structure. Inspecting...'.format(
+            u'Found {location} as a timed-exam in course structure. Inspecting...'.format(
                 location=unicode(timed_exam.location)
             )
         )
@@ -88,7 +88,7 @@ def register_special_exams(course_key):
             exam_metadata['exam_id'] = exam['id']
 
             exam_id = update_exam(**exam_metadata)
-            msg = 'Updated timed exam {exam_id}'.format(exam_id=exam['id'])
+            msg = u'Updated timed exam {exam_id}'.format(exam_id=exam['id'])
             log.info(msg)
 
         except ProctoredExamNotFoundException:
@@ -136,7 +136,7 @@ def register_special_exams(course_key):
             if not search:
                 # This means it was turned off in Studio, we need to mark
                 # the exam as inactive (we don't delete!)
-                msg = 'Disabling timed exam {exam_id}'.format(exam_id=exam['id'])
+                msg = u'Disabling timed exam {exam_id}'.format(exam_id=exam['id'])
                 log.info(msg)
                 update_exam(
                     exam_id=exam['id'],

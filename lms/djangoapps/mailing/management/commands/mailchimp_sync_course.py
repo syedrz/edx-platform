@@ -294,7 +294,7 @@ def subscribe_with_data(mailchimp, list_id, user_data):
                                               update_existing=True)
 
         log.debug(
-            "Added: %s Error on: %s", result['add_count'], result['error_count']
+            u"Added: %s Error on: %s", result['add_count'], result['error_count']
         )
 
 

@@ -55,7 +55,7 @@ def export_courses_to_output_path(output_path):
             export_course_to_xml(module_store, content_store, course_id, root_dir, course_dir)
         except Exception as err:  # pylint: disable=broad-except
             failed_export_courses.append(text_type(course_id))
-            print("=" * 30 + "> Oops, failed to export {0}".format(course_id))
+            print(u"=" * 30 + u"> Oops, failed to export {0}".format(course_id))
             print("Error:")
             print(err)
 

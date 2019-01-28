@@ -49,7 +49,7 @@ class VideoEventsTestMixin(EventsTestMixin, VideoBaseTest):
         self.assertIn(field, event_dict, u'{0} not found in the root of the event'.format(field))
         self.assertTrue(
             isinstance(event_dict[field], field_type),
-            'Expected "{key}" to be a "{field_type}", but it has the value "{value}" of type "{t}"'.format(
+            u'Expected "{key}" to be a "{field_type}", but it has the value "{value}" of type "{t}"'.format(
                 key=field,
                 value=event_dict[field],
                 t=type(event_dict[field]),

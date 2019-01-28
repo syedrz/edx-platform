@@ -204,7 +204,7 @@ def dump_module_extensions(course, unit):
     data.sort(key=lambda x: x[header[0]])
     return {
         "header": header,
-        "title": _("Users with due date extensions for {0}").format(
+        "title": _(u"Users with due date extensions for {0}").format(
             title_or_url(unit)),
         "data": data
     }
@@ -233,7 +233,7 @@ def dump_student_extensions(course, student):
         data.append(dict(zip(header, (title, due))))
     return {
         "header": header,
-        "title": _("Due date extensions for {0} {1} ({2})").format(
+        "title": _(u"Due date extensions for {0} {1} ({2})").format(
             student.first_name, student.last_name, student.username),
         "data": data}
 

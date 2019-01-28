@@ -1,3 +1,4 @@
+# pylint: disable=unicode-format-string
 """
 Classes used for defining and running pytest test suites
 """

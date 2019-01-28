@@ -1,3 +1,4 @@
+# pylint: disable=unicode-format-string
 """
 Code to delete rows from a table within a Django mgmt command using best practices.
 """
@@ -41,7 +42,7 @@ def delete_rows(model_mgr,
         log.info(u"No data exists in table %s - skipping.", table_name)
         return
     log.info(
-        "STARTED: Deleting around %s rows with chunk size of %s and %s seconds between chunks.",
+        u"STARTED: Deleting around %s rows with chunk size of %s and %s seconds between chunks.",
         max_id - min_id + 1, chunk_size, sleep_between
     )
 

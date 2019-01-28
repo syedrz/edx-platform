@@ -36,7 +36,7 @@ def get_email_cookies_via_sailthru(self, user_email, post_parms):
     try:
         sailthru_client = SailthruClient(email_config.sailthru_key, email_config.sailthru_secret)
         log.info(
-            'Sending to Sailthru the user interest cookie [%s] for user [%s]',
+            u'Sending to Sailthru the user interest cookie [%s] for user [%s]',
             post_parms.get('cookies', ''),
             user_email
         )
@@ -457,7 +457,7 @@ def _build_purchase_item(course_id, course_url, cost_in_cents, mode, course_data
         item['title'] = course_data['title']
     else:
         # can't find, just invent title
-        item['title'] = 'Course {} mode: {}'.format(course_id, mode)
+        item['title'] = u'Course {} mode: {}'.format(course_id, mode)
 
     if 'tags' in course_data:
         item['tags'] = course_data['tags']

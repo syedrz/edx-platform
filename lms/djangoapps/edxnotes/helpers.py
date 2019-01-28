@@ -57,7 +57,7 @@ def get_edxnotes_id_token(user):
         notes_application = Application.objects.get(name=CLIENT_NAME)
     except Application.DoesNotExist:
         raise ImproperlyConfigured(
-            'OAuth2 Client with name [{}] does not exist.'.format(CLIENT_NAME)
+            u'OAuth2 Client with name [{}] does not exist.'.format(CLIENT_NAME)
         )
     return create_jwt_for_user(
         user, secret=notes_application.client_secret, aud=notes_application.client_id

@@ -35,7 +35,7 @@ class LibraryFixture(XBlockContainerFixture):
         """
         String representation of the library fixture, useful for debugging.
         """
-        return "<LibraryFixture: org='{org}', number='{number}'>".format(**self.library_info)
+        return u"<LibraryFixture: org='{org}', number='{number}'>".format(**self.library_info)
 
     def install(self):
         """

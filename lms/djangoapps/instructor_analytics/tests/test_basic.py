@@ -62,8 +62,8 @@ class TestAnalyticsBasic(ModuleStoreTestCase):
         self.instructor = InstructorFactory(course_key=self.course_key)
         for user in self.users:
             user.profile.meta = json.dumps({
-                "position": "edX expert {}".format(user.id),
-                "company": "Open edX Inc {}".format(user.id),
+                "position": u"edX expert {}".format(user.id),
+                "company": u"Open edX Inc {}".format(user.id),
             })
             user.profile.save()
         self.students_who_may_enroll = list(self.users) + [UserFactory() for _ in range(5)]
@@ -163,8 +163,8 @@ class TestAnalyticsBasic(ModuleStoreTestCase):
         self.assertEqual(len(userreports), len(self.users))
         for userreport in userreports:
             self.assertEqual(set(userreport.keys()), set(query_features))
-            self.assertIn(userreport[u'meta.position'], [u"edX expert {}".format(user.id) for user in self.users])
-            self.assertIn(userreport[u'meta.company'], [u"Open edX Inc {}".format(user.id) for user in self.users])
+            self.assertIn(userreport['meta.position'], [u"edX expert {}".format(user.id) for user in self.users])
+            self.assertIn(userreport['meta.company'], [u"Open edX Inc {}".format(user.id) for user in self.users])
 
     def test_enrolled_students_enrollment_verification(self):
         """

@@ -41,7 +41,7 @@ def test_successful_dry_run(mock_logger):
         assert mock_logger.call_count == 3
         mock_logger.assert_any_call(u"Read %s opt-out rows from CSV file '%s'.", 3, tmp_csv_file)
         mock_logger.assert_any_call(
-            'Attempting opt-out for rows (%s, %s) through (%s, %s)...', '1', 'UniversityX', '3', 'StateUX'
+            u'Attempting opt-out for rows (%s, %s) through (%s, %s)...', '1', 'UniversityX', '3', 'StateUX'
         )
         mock_logger.assert_any_call(
             'INSERT INTO user_api_userorgtag (`user_id`, `org`, `key`, `value`, `created`, `modified`) \

@@ -354,7 +354,7 @@ class TestRescoringTask(TestIntegrationTask):
         to not-equals).
         """
         factory = CustomResponseXMLFactory()
-        script = textwrap.dedent("""
+        script = textwrap.dedent(u"""
                 def check_func(expect, answer_given):
                     expected = str(random.randint(0, 100))
                     return {'ok': answer_given %s expected, 'msg': expected}

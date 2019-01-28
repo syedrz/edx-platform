@@ -111,7 +111,7 @@ class ScheduleSendEmailTestMixin(FilteredQueryCountMixin):
 
     def _get_template_overrides(self):
         templates_override = deepcopy(settings.TEMPLATES)
-        templates_override[0]['OPTIONS']['string_if_invalid'] = "TEMPLATE WARNING - MISSING VARIABLE [%s]"
+        templates_override[0]['OPTIONS']['string_if_invalid'] = u"TEMPLATE WARNING - MISSING VARIABLE [%s]"
         return templates_override
 
     def _schedule_factory(self, offset=None, **factory_kwargs):

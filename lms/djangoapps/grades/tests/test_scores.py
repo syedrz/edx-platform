@@ -45,7 +45,7 @@ def expected_result_repr(self):
     """
     included = ('raw_earned', 'raw_possible', 'weighted_earned', 'weighted_possible', 'weight', 'graded')
     attributes = ['{}={}'.format(name, getattr(self, name)) for name in included]
-    return '<ExpectedResult {}>'.format(' '.join(attributes))
+    return u'<ExpectedResult {}>'.format(' '.join(attributes))
 
 
 class TestScoredBlockTypes(TestCase):

@@ -53,8 +53,8 @@ class Badge(PageObject):
         """
         Execute javascript to bring the popup(.badges-model) inside the window.
         """
-        script_to_execute = ("var popup = document.querySelectorAll('.badges-modal')[0];;"
-                             "popup.style.left = '20%';")
+        script_to_execute = (u"var popup = document.querySelectorAll('.badges-modal')[0];;"
+                             "popup.style.left = '20%';")  # pylint: disable=unicode-format-string
         self.browser.execute_script(script_to_execute)
 
     def close_modal(self):

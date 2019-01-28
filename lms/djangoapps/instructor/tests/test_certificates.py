@@ -685,7 +685,7 @@ class CertificateExceptionViewInstructorApiTest(SharedModuleStoreTestCase):
         # Assert Error Message
         self.assertEqual(
             res_json['message'],
-            "{user} is not enrolled in this course. Please check your spelling and retry.".format(
+            u"{user} is not enrolled in this course. Please check your spelling and retry.".format(
                 user=self.certificate_exception['user_name']
             )
         )
@@ -764,7 +764,7 @@ class CertificateExceptionViewInstructorApiTest(SharedModuleStoreTestCase):
         self.assertEqual(
             res_json['message'],
             u"Certificate exception (user={user}) does not exist in certificate white list. "
-            u"Please refresh the page and try again.".format(user=self.certificate_exception['user_name'])
+            "Please refresh the page and try again.".format(user=self.certificate_exception['user_name'])
         )
 
 
@@ -1224,7 +1224,7 @@ class CertificateInvalidationViewTests(SharedModuleStoreTestCase):
         self.assertEqual(
             res_json['message'],
             u"The student {student} does not have certificate for the course {course}. "
-            u"Kindly verify student username/email and the selected course are correct and try again.".format(
+            "Kindly verify student username/email and the selected course are correct and try again.".format(
                 student=self.enrolled_user_2.username,
                 course=self.course.number,
             ),
@@ -1251,7 +1251,7 @@ class CertificateInvalidationViewTests(SharedModuleStoreTestCase):
         self.assertEqual(
             res_json['message'],
             u"Certificate for student {user} is already invalid, kindly verify that certificate "
-            u"was generated for this student and then proceed.".format(
+            "was generated for this student and then proceed.".format(
                 user=self.enrolled_user_1.username,
             ),
         )

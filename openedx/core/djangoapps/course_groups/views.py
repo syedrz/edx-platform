@@ -270,7 +270,7 @@ def users_in_cohort(request, course_key_string, cohort_id):
 
     user_info = [{'username': u.username,
                   'email': u.email,
-                  'name': '{0} {1}'.format(u.first_name, u.last_name)}
+                  'name': u'{0} {1}'.format(u.first_name, u.last_name)}
                  for u in users]
 
     return json_http_response({'success': True,
@@ -378,7 +378,7 @@ def remove_user_from_cohort(request, course_key_string, cohort_id):
         api.remove_user_from_cohort(course_key, username)
     except User.DoesNotExist:
         log.debug('no user')
-        return json_http_response({'success': False, 'msg': "No user '{0}'".format(username)})
+        return json_http_response({'success': False, 'msg': u"No user '{0}'".format(username)})
 
     return json_http_response({'success': True})
 

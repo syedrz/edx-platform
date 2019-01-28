@@ -102,7 +102,7 @@ class UserRetirementStatusAdmin(admin.ModelAdmin):
         try:
             if obj.current_state.state_name == 'PENDING':
                 return format_html(
-                    '<a class="button" href="{}">{}</a>&nbsp;',
+                    u'<a class="button" href="{}">{}</a>&nbsp;',
                     reverse('admin:cancel-retirement', args=[obj.pk]),
                     _('Cancel')
                 )

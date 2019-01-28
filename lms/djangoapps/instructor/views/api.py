@@ -150,7 +150,7 @@ log = logging.getLogger(__name__)
 
 TASK_SUBMISSION_OK = 'created'
 
-SUCCESS_MESSAGE_TEMPLATE = _("The {report_type} report is being created. "
+SUCCESS_MESSAGE_TEMPLATE = _(u"The {report_type} report is being created. "
                              "To view the status of the report, see Pending Tasks below.")
 
 
@@ -377,7 +377,7 @@ def register_and_enroll_students(request, course_id):  # pylint: disable=too-man
                     general_errors.append({
                         'username': '',
                         'email': '',
-                        'response': _('Data in row #{row_num} must have exactly four columns: email, username, full name, and country').format(row_num=row_num)
+                        'response': _(u'Data in row #{row_num} must have exactly four columns: email, username, full name, and country').format(row_num=row_num)
                     })
                 continue
 
@@ -403,8 +403,8 @@ def register_and_enroll_students(request, course_id):  # pylint: disable=too-man
                     # if it's not an exact match then just display a warning message, but continue onwards
                     if not User.objects.filter(email=email, username=username).exists():
                         warning_message = _(
-                            'An account with email {email} exists but the provided username {username} '
-                            'is different. Enrolling anyway with {email}.'
+                            u'An account with email {email} exists but the provided username {username} '
+                            u'is different. Enrolling anyway with {email}.'
                         ).format(email=email, username=username)
 
                         warnings.append({
@@ -436,7 +436,7 @@ def register_and_enroll_students(request, course_id):  # pylint: disable=too-man
                     row_errors.append({
                         'username': username,
                         'email': email,
-                        'response': _('Invalid email {email_address}.').format(email_address=email),
+                        'response': _(u'Invalid email {email_address}.').format(email_address=email),
                     })
                     log.warning(u'Email address %s is associated with a retired user, so course enrollment was ' +
                                 u'blocked.', email)
@@ -573,7 +573,7 @@ def create_and_enroll_user(email, username, name, country, password, course_id, 
             )
     except IntegrityError:
         errors.append({
-            'username': username, 'email': email, 'response': _('Username {user} already exists.').format(user=username)
+            'username': username, 'email': email, 'response': _(u'Username {user} already exists.').format(user=username)
         })
     except Exception as ex:  # pylint: disable=broad-except
         log.exception(type(ex).__name__)
@@ -592,7 +592,7 @@ def create_and_enroll_user(email, username, name, country, password, course_id, 
             send_mail_to_student(email, email_params)
         except Exception as ex:  # pylint: disable=broad-except
             log.exception(
-                "Exception '{exception}' raised while sending email to new user.".format(exception=type(ex).__name__)
+                u"Exception '{exception}' raised while sending email to new user.".format(exception=type(ex).__name__)
             )
             errors.append({
                 'username': username,
@@ -737,7 +737,7 @@ def students_update_enrollment(request, course_id):
 
             else:
                 return HttpResponseBadRequest(strip_tags(
-                    "Unrecognized action '{}'".format(action)
+                    u"Unrecognized action '{}'".format(action)
                 ))
 
         except ValidationError:
@@ -822,7 +822,7 @@ def bulk_beta_modify_access(request, course_id):
                 revoke_access(course, user, rolename)
             else:
                 return HttpResponseBadRequest(strip_tags(
-                    "Unrecognized action '{}'".format(action)
+                    u"Unrecognized action '{}'".format(action)
                 ))
         except User.DoesNotExist:
             error = True
@@ -929,7 +929,7 @@ def modify_access(request, course_id):
         revoke_access(course, user, rolename)
     else:
         return HttpResponseBadRequest(strip_tags(
-            "unrecognized action '{}'".format(action)
+            u"unrecognized action u'{}'".format(action)
         ))
 
     response_payload = {
@@ -1143,7 +1143,7 @@ def sale_validation(request, course_id):
         invoice_number = int(invoice_number)
     except ValueError:
         return HttpResponseBadRequest(
-            "invoice_number must be an integer, {value} provided".format(
+            u"invoice_number must be an integer, {value} provided".format(
                 value=invoice_number
             )
         )
@@ -1455,7 +1455,7 @@ def get_coupon_codes(request, course_id):  # pylint: disable=unused-argument
     query_features = [
         ('code', _('Coupon Code')),
         ('course_id', _('Course Id')),
-        ('percentage_discount', _('% Discount')),
+        ('percentage_discount', _('% Discount')),  # pylint: disable=unicode-format-string
         ('description', _('Description')),
         ('expiration_date', _('Expiration Date')),
         ('is_active', _('Is Active')),
@@ -1726,7 +1726,7 @@ def generate_registration_codes(request, course_id):
     if len(paid_modes) != 1:
         msg = (
             u"Generating Code Redeem Codes for Course '{course_id}', which must have a single paid course mode. "
-            u"This is a configuration issue. Current course modes with payment options: {paid_modes}"
+            "This is a configuration issue. Current course modes with payment options: {paid_modes}"
         ).format(course_id=course_id, paid_modes=paid_modes)
         log.error(msg)
         return HttpResponse(
@@ -1901,7 +1901,7 @@ def get_anon_ids(request, course_id):  # pylint: disable=unused-argument
     def csv_response(filename, header, rows):
         """Returns a CSV http response for the given header and rows (excel/utf-8)."""
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename={0}'.format(text_type(filename).encode('utf-8'))
+        response['Content-Disposition'] = u'attachment; filename={0}'.format(text_type(filename).encode('utf-8'))
         writer = csv.writer(response, dialect='excel', quotechar='"', quoting=csv.QUOTE_ALL)
         # In practice, there should not be non-ascii data in this query,
         # but trying to do the right thing anyway.
@@ -2631,7 +2631,7 @@ def list_forum_members(request, course_id):
     if rolename not in [FORUM_ROLE_ADMINISTRATOR, FORUM_ROLE_MODERATOR, FORUM_ROLE_GROUP_MODERATOR,
                         FORUM_ROLE_COMMUNITY_TA]:
         return HttpResponseBadRequest(strip_tags(
-            "Unrecognized rolename '{}'.".format(rolename)
+            u"Unrecognized rolename '{}'.".format(rolename)
         ))
 
     try:
@@ -2789,7 +2789,7 @@ def update_forum_role_membership(request, course_id):
     if rolename not in [FORUM_ROLE_ADMINISTRATOR, FORUM_ROLE_MODERATOR, FORUM_ROLE_GROUP_MODERATOR,
                         FORUM_ROLE_COMMUNITY_TA]:
         return HttpResponseBadRequest(strip_tags(
-            "Unrecognized rolename '{}'.".format(rolename)
+            u"Unrecognized rolename '{}'.".format(rolename)
         ))
 
     user = get_student_from_identifier(unique_student_identifier)
@@ -2849,9 +2849,9 @@ def change_due_date(request, course_id):
     set_due_date_extension(course, unit, student, due_date)
 
     return JsonResponse(_(
-        'Successfully changed due date for student {0} for {1} '
-        'to {2}').format(student.profile.name, _display_unit(unit),
-                         due_date.strftime(u'%Y-%m-%d %H:%M')))
+        u'Successfully changed due date for student {0} for {1} '
+        u'to {2}').format(student.profile.name, _display_unit(unit),
+                          due_date.strftime(u'%Y-%m-%d %H:%M')))
 
 
 @handle_dashboard_error
@@ -2876,9 +2876,9 @@ def reset_due_date(request, course_id):
 
     original_due_date_str = unit.due.strftime(u'%Y-%m-%d %H:%M')
     return JsonResponse(_(
-        'Successfully reset due date for student {0} for {1} '
-        'to {2}').format(student.profile.name, _display_unit(unit),
-                         original_due_date_str))
+        u'Successfully reset due date for student {0} for {1} '
+        u'to {2}').format(student.profile.name, _display_unit(unit),
+                          original_due_date_str))
 
 
 @handle_dashboard_error
@@ -3147,8 +3147,8 @@ def add_certificate_exception(course_key, student, certificate_exception):
         'user_email': student.email,
         'user_name': student.username,
         'user_id': student.id,
-        'certificate_generated': generated_certificate and generated_certificate.created_date.strftime("%B %d, %Y"),
-        'created': certificate_white_list.created.strftime("%A, %B %d, %Y"),
+        'certificate_generated': generated_certificate and generated_certificate.created_date.strftime(u"%B %d, %Y"),
+        'created': certificate_white_list.created.strftime(u"%A, %B %d, %Y"),
     })
 
     return exception
@@ -3466,7 +3466,7 @@ def invalidate_certificate(request, generated_certificate, certificate_invalidat
         'id': certificate_invalidation.id,
         'user': certificate_invalidation.generated_certificate.user.username,
         'invalidated_by': certificate_invalidation.invalidated_by.username,
-        'created': certificate_invalidation.created.strftime("%B %d, %Y"),
+        'created': certificate_invalidation.created.strftime(u"%B %d, %Y"),
         'notes': certificate_invalidation.notes,
     }
 
@@ -3522,7 +3522,7 @@ def validate_request_data_and_get_certificate(certificate_invalidation, course_k
     certificate = GeneratedCertificate.certificate_for_student(student, course_key)
     if not certificate:
         raise ValueError(_(
-            "The student {student} does not have certificate for the course {course}. Kindly verify student "
+            u"The student {student} does not have certificate for the course {course}. Kindly verify student "
             "username/email and the selected course are correct and try again."
         ).format(student=student.username, course=course_key.course))
     return certificate

@@ -170,7 +170,7 @@ def rescore_problem_module_state(xmodule_instance_args, module_descriptor, stude
         except (LoncapaProblemError, StudentInputError, ResponseError):
             TASK_LOG.warning(
                 u"error processing rescore call for course %(course)s, problem %(loc)s "
-                u"and student %(student)s",
+                "and student %(student)s",  # pylint: disable=unicode-format-string
                 dict(
                     course=course_id,
                     loc=usage_key,
@@ -182,7 +182,7 @@ def rescore_problem_module_state(xmodule_instance_args, module_descriptor, stude
         instance.save()
         TASK_LOG.debug(
             u"successfully processed rescore call for course %(course)s, problem %(loc)s "
-            u"and student %(student)s",
+            "and student %(student)s",  # pylint: disable=unicode-format-string
             dict(
                 course=course_id,
                 loc=usage_key,
@@ -262,7 +262,7 @@ def override_score_module_state(xmodule_instance_args, module_descriptor, studen
         instance.save()
         TASK_LOG.debug(
             u"successfully processed score override for course %(course)s, problem %(loc)s "
-            u"and student %(student)s",
+            "and student %(student)s",  # pylint: disable=unicode-format-string
             dict(
                 course=course_id,
                 loc=usage_key,

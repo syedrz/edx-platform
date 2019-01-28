@@ -68,7 +68,7 @@ class Command(BaseCommand):
         LOGGER.info(
             (
                 u"Starting to create tasks for ungenerated certificates "
-                u"with arguments %s and options %s"
+                "with arguments %s and options %s"  # pylint: disable=unicode-format-string
             ),
             text_type(args),
             text_type(options)
@@ -118,7 +118,7 @@ class Command(BaseCommand):
                 LOGGER.info(
                     (
                         u"Student %s has certificate status '%s' "
-                        u"in course '%s'"
+                        "in course '%s'"  # pylint: disable=unicode-format-string
                     ),
                     student.id,
                     cert_status,
@@ -140,8 +140,8 @@ class Command(BaseCommand):
                             LOGGER.info(
                                 (
                                     u"Added a certificate generation task to the XQueue "
-                                    u"for student %s in course '%s'. "
-                                    u"The new certificate status is '%s'."
+                                    "for student %s in course '%s'. "  # pylint: disable=unicode-format-string
+                                    "The new certificate status is '%s'."  # pylint: disable=unicode-format-string
                                 ),
                                 student.id,
                                 text_type(course_key),
@@ -152,8 +152,8 @@ class Command(BaseCommand):
                         LOGGER.info(
                             (
                                 u"Skipping certificate generation for "
-                                u"student %s in course '%s' "
-                                u"because the noop flag is set."
+                                "student %s in course '%s' "  # pylint: disable=unicode-format-string
+                                "because the noop flag is set."
                             ),
                             student.id,
                             text_type(course_key)
@@ -163,7 +163,7 @@ class Command(BaseCommand):
                     LOGGER.info(
                         (
                             u"Skipped student %s because "
-                            u"certificate status '%s' is not in %s"
+                            "certificate status '%s' is not in %s"  # pylint: disable=unicode-format-string
                         ),
                         student.id,
                         cert_status,
@@ -173,7 +173,7 @@ class Command(BaseCommand):
             LOGGER.info(
                 (
                     u"Completed ungenerated certificates command "
-                    u"for course '%s'"
+                    "for course '%s'"  # pylint: disable=unicode-format-string
                 ),
                 text_type(course_key)
             )

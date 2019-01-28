@@ -450,7 +450,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
         resp = self.client.post(reverse('shoppingcart.views.use_code'), {'code': self.reg_code})
         self.assertEqual(resp.status_code, 400)
         self.assertIn(
-            "This enrollment code ({enrollment_code}) is no longer valid.".format(
+            u"This enrollment code ({enrollment_code}) is no longer valid.".format(
                 enrollment_code=self.reg_code), resp.content)
 
     def test_course_does_not_exist_in_cart_against_valid_reg_code(self):
@@ -460,7 +460,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
 
         resp = self.client.post(reverse('shoppingcart.views.use_code'), {'code': self.reg_code})
         self.assertEqual(resp.status_code, 404)
-        self.assertIn("Code '{0}' is not valid for any course in the shopping cart.".format(self.reg_code), resp.content)
+        self.assertIn(u"Code '{0}' is not valid for any course in the shopping cart.".format(self.reg_code), resp.content)
 
     def test_cart_item_qty_greater_than_1_against_valid_reg_code(self):
         course_key = text_type(self.course_key)
@@ -649,7 +649,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
         resp = self.client.post(reverse('shoppingcart.views.remove_item', args=[]),
                                 {'id': reg_item.id})
         debug_log.assert_called_with(
-            'Code redemption does not exist for order item id=%s.',
+            u'Code redemption does not exist for order item id=%s.',
             str(reg_item.id)
         )
 
@@ -671,7 +671,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
         self.assertEqual(resp.status_code, 200)
         self.assertEquals(self.cart.orderitem_set.count(), 0)
         info_log.assert_called_with(
-            'Coupon "%s" redemption entry removed for user "%s" for order item "%s"',
+            u'Coupon "%s" redemption entry removed for user "%s" for order item "%s"',
             self.coupon_code,
             self.user,
             str(reg_item.id)
@@ -690,7 +690,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
 
         self.assertEqual(resp.status_code, 200)
         info_log.assert_called_with(
-            'Coupon redemption entry removed for user %s for order %s',
+            u'Coupon redemption entry removed for user %s for order %s',
             self.user,
             reg_item.id
         )
@@ -724,7 +724,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
         self.assertEqual(resp.status_code, 200)
         self.assertEquals(self.cart.orderitem_set.count(), 1)
         info_log.assert_called_with(
-            'Coupon "%s" redemption entry removed for user "%s" for order item "%s"',
+            'Coupon "%s" redemption entry removed for user "%s" for order item "%s"',  # pylint: disable=unicode-format-string,line-too-long
             self.coupon_code,
             self.user,
             str(reg_item.id)
@@ -761,7 +761,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
         self.assertEquals(self.cart.orderitem_set.count(), 0)
 
         info_log.assert_called_with(
-            'Coupon redemption entry removed for user %s for order %s',
+            u'Coupon redemption entry removed for user %s for order %s',
             self.user,
             reg_item.id
         )
@@ -864,7 +864,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
                                  {'id': cert_item.id})
         self.assertEqual(resp2.status_code, 200)
         exception_log.assert_called_with(
-            'Cannot remove cart OrderItem id=%s. DoesNotExist or item is already purchased', str(cert_item.id)
+            u'Cannot remove cart OrderItem id=%s. DoesNotExist or item is already purchased', str(cert_item.id)
         )
 
         resp3 = self.client.post(
@@ -873,7 +873,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
         )
         self.assertEqual(resp3.status_code, 200)
         exception_log.assert_called_with(
-            'Cannot remove cart OrderItem id=%s. DoesNotExist or item is already purchased',
+            u'Cannot remove cart OrderItem id=%s. DoesNotExist or item is already purchased',
             '-1'
         )
 
@@ -936,7 +936,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
                 'unit_cost': 40,
                 'quantity': 1,
                 'line_cost': 40,
-                'line_desc': '{} for course Test Course'.format(self.verified_course_mode.mode_display_name),
+                'line_desc': u'{} for course Test Course'.format(self.verified_course_mode.mode_display_name),
                 'course_key': unicode(self.verified_course_key)
             })
 
@@ -1004,7 +1004,7 @@ class ShoppingCartViewsTests(SharedModuleStoreTestCase, XssTestMixin):
             'unit_cost': 40,
             'quantity': 1,
             'line_cost': 40,
-            'line_desc': '{} for course Test Course'.format(self.verified_course_mode.mode_display_name),
+            'line_desc': u'{} for course Test Course'.format(self.verified_course_mode.mode_display_name),
             'course_key': unicode(self.verified_course_key)
         })
 
@@ -1641,7 +1641,7 @@ class ShoppingcartViewsClosedEnrollment(ModuleStoreTestCase):
         # coupon redemption entry should also be deleted when the item is expired.
         resp = self.client.get(reverse('shoppingcart.views.show_cart', args=[]))
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("{course_name} has been removed because the enrollment period has closed.".format(
+        self.assertIn(u"{course_name} has been removed because the enrollment period has closed.".format(
             course_name=self.testing_course.display_name), resp.content.decode(resp.charset)
         )
 
@@ -1711,7 +1711,7 @@ class ShoppingcartViewsClosedEnrollment(ModuleStoreTestCase):
         # so we delete that item from the cart and display the message in the cart
         resp = self.client.get(reverse('shoppingcart.views.show_cart', args=[]))
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("{course_name} has been removed because the enrollment period has closed.".format(course_name=self.testing_course.display_name), resp.content)
+        self.assertIn(u"{course_name} has been removed because the enrollment period has closed.".format(course_name=self.testing_course.display_name), resp.content)
         self.assertIn('40.00', resp.content)
 
 

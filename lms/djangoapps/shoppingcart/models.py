@@ -390,7 +390,7 @@ class Order(models.Model):
                         'course_names': ", ".join(course_names),
                         'dashboard_url': dashboard_url,
                         'currency_symbol': settings.PAID_COURSE_REGISTRATION_CURRENCY[1],
-                        'order_placed_by': '{username} ({email})'.format(
+                        'order_placed_by': u'{username} ({email})'.format(
                             username=self.user.username, email=self.user.email
                         ),
                         'has_billing_info': settings.FEATURES['STORE_BILLING_INFO'],
@@ -597,7 +597,7 @@ class Order(models.Model):
 
         if self.status not in ORDER_STATUS_MAP.keys():
             raise InvalidStatusToRetire(
-                "order status {order_status} is not 'paying' or 'cart'".format(
+                u"order status {order_status} is not 'paying' or 'cart'".format(
                     order_status=self.status
                 )
             )
@@ -1617,7 +1617,7 @@ class PaidCourseRegistration(OrderItem):
         """
         notification = Text(_(
             u"Please visit your {link_start}dashboard{link_end} "
-            u"to see your new course."
+            "to see your new course."
         )).format(
             link_start=HTML(u'<a href="{url}">').format(url=reverse('dashboard')),
             link_end=HTML(u'</a>'),
@@ -1908,7 +1908,7 @@ class CertificateItem(OrderItem):
             send_mail(subject, message, from_email, to_email, fail_silently=False)
         except Exception as exception:  # pylint: disable=broad-except
             err_str = ('Failed sending email to billing to request a refund for verified certificate'
-                       ' (User {user}, Course {course}, CourseEnrollmentID {ce_id}, Order #{order})\n{exception}')
+                       u' (User {user}, Course {course}, CourseEnrollmentID {ce_id}, Order #{order})\n{exception}')
             log.error(err_str.format(
                 user=course_enrollment.user,
                 course=course_enrollment.course_id,
@@ -2004,7 +2004,7 @@ class CertificateItem(OrderItem):
             verification_url = "http://{domain}{path}".format(domain=domain, path=path)
 
             verification_reminder = _(
-                "If you haven't verified your identity yet, please start the verification process ({verification_url})."
+                u"If you haven't verified your identity yet, please start the verification process ({verification_url})."
             ).format(verification_url=verification_url)
 
         if is_professional_mode_verified:
@@ -2012,8 +2012,8 @@ class CertificateItem(OrderItem):
                                     "course start date. ")
 
         refund_reminder = _(
-            "{refund_reminder_msg}"
-            "To receive your refund, contact {billing_email}. "
+            u"{refund_reminder_msg}"
+            "To receive your refund, contact {billing_email}. "  # pylint: disable=unicode-format-string
             "Please include your order number in your email. "
             "Please do NOT include your credit card information."
         ).format(
@@ -2189,8 +2189,8 @@ class Donation(OrderItem):
         """
         return _(
             u"We greatly appreciate this generous contribution and your support of the {platform_name} mission.  "
-            u"This receipt was prepared to support charitable contributions for tax purposes.  "
-            u"We confirm that neither goods nor services were provided in exchange for this gift."
+            "This receipt was prepared to support charitable contributions for tax purposes.  "
+            "We confirm that neither goods nor services were provided in exchange for this gift."
         ).format(platform_name=configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME))
 
     @classmethod

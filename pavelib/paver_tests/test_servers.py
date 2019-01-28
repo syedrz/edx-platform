@@ -1,3 +1,4 @@
+# pylint: disable=unicode-format-string
 """Unit tests for the Paver server tasks."""
 
 import ddt
@@ -192,8 +193,8 @@ class TestPaverServerTasks(PaverTestCase):
         self.assertEquals(
             self.task_messages,
             [
-                "echo 'import {system}.envs.{settings}' "
-                "| python manage.py {system} --settings={settings} shell --plain --pythonpath=.".format(
+                u"echo 'import {system}.envs.{settings}' "
+                "| python manage.py {system} --settings={settings} shell --plain --pythonpath=.".format(  # pylint: disable=unicode-format-string
                     system=system, settings=settings
                 ),
             ]

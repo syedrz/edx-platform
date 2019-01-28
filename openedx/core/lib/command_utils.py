@@ -27,7 +27,7 @@ def validate_mutually_exclusive_option(options, option_1, option_2):
     Validates that both of the 2 given options are not specified.
     """
     if options.get(option_1) and options.get(option_2):
-        raise CommandError('Both --{} and --{} cannot be specified.'.format(option_1, option_2))
+        raise CommandError(u'Both --{} and --{} cannot be specified.'.format(option_1, option_2))
 
 
 def validate_dependent_option(options, dependent_option, depending_on_option):
