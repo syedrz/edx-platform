@@ -2823,9 +2823,8 @@ class TestXBlockInfo(ItemTest):
         self.assertEqual(xblock_info['default_time_limit_minutes'], 100)
         self.assertEqual(xblock_info['proctoring_exam_configuration_link'], 'test_url')
         self.assertEqual(xblock_info['supports_onboarding'], True)
-        self.assertEqual(xblock_inf['is_onboarding_exam'], False)
+        self.assertEqual(xblock_info['is_onboarding_exam'], False)
         get_exam_configuration_dashboard_url_patch.assert_called_with(self.course.id, xblock_info['id'])
-
 
 
 class TestLibraryXBlockInfo(ModuleStoreTestCase):
