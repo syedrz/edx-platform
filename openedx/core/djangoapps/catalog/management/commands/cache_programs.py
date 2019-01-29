@@ -43,8 +43,9 @@ class Command(BaseCommand):
                 'Failed to create API client. Service user {username} does not exist.'.format(username=username)
             )
             raise
-
+        
         programs = {}
+        courses = {}
         pathways = {}
         for site in Site.objects.all():
             site_config = getattr(site, 'configuration', None)
@@ -60,12 +61,14 @@ class Command(BaseCommand):
             new_pathways, pathways_failed = self.get_pathways(client, site)
             new_pathways, new_programs, pathway_processing_failed = self.process_pathways(site, new_pathways,
                                                                                           new_programs)
+            new_courses, courses_failed = self.get_courses(client, site)
 
-            if program_uuids_failed or program_details_failed or pathways_failed or pathway_processing_failed:
+            if program_uuids_failed or program_details_failed or pathways_failed or pathway_processing_failed or courses_failed:
                 failure = True
 
             programs.update(new_programs)
             pathways.update(new_pathways)
+            courses.update(new_courses)
 
             logger.info('Caching UUIDs for {total} programs for site {site_name}.'.format(
                 total=len(uuids),
@@ -80,6 +83,14 @@ class Command(BaseCommand):
             ))
             cache.set(SITE_PATHWAY_IDS_CACHE_KEY_TPL.format(domain=site.domain), pathway_ids, None)
 
+            # Emma: I don't think I need to do this, do I??
+            course_ids = new_courses.keys()
+            logger.info('Caching ids for {total} courses for site {site_name}.'.format(
+                total=len(course_ids),
+                site_name=site.domain,
+            ))
+            cache.set(SITE_COURSE_IDS_CACHE_KEY_TPL.format(domain=site.domain), course_ids, None)
+
         successful_programs = len(programs)
         logger.info('Caching details for {successful_programs} programs.'.format(
             successful_programs=successful_programs))
@@ -89,6 +100,11 @@ class Command(BaseCommand):
         logger.info('Caching details for {successful_pathways} pathways.'.format(
             successful_pathways=successful_pathways))
         cache.set_many(pathways, None)
+
+        successful_courses = len(courses)
+        logger.info('Caching programs uuids for {successful_courses} courses.'.format(
+            successful_courses=successful_courses))
+        cache.set_many(courses, None)
 
         if failure:
             # This will fail a Jenkins job running this command, letting site
@@ -127,7 +143,6 @@ class Command(BaseCommand):
                 program = client.programs(uuid).get(exclude_utm=1)
                 # pathways get added in process_pathways
                 program['pathway_ids'] = []
-                programs[cache_key] = program
             except:  # pylint: disable=bare-except
                 logger.exception('Failed to retrieve details for program {uuid}.'.format(uuid=uuid))
                 failure = True
@@ -188,3 +203,28 @@ class Command(BaseCommand):
                 logger.exception('Failed to process pathways for {domain}'.format(domain=site.domain))
                 failure = True
         return processed_pathways, programs, failure
+
+    def get_courses(self, client, site):
+        """
+        Get all courses for the current client
+        """
+        failure = False
+        courses = {}
+        try:
+            logger.info('Requesting courses for {domain}.'.format(domain=site.domain))
+            next_page = 1
+            while next_page:
+                # Emma: hidden? as a parameter
+                new_courses = client.course_runs.get(exclude_utm=1, page=next_page) 
+                courses.extend({cr[course]:cr[programs] for cr in new_courses['results']})
+
+                next_page = next_page + 1 if new_courses['next'] else None
+        except:  # pylint: disable=bare-except
+            logger.exception('Failed to retrieve courses for site: {domain}.'.format(domain=site.domain))
+            failure = True
+
+        logger.info('Received {total} courses for site {domain}'.format(
+            total=len(courses),
+            domain=site.domain
+        ))
+        return courses, failure
