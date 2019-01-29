@@ -19,12 +19,24 @@
                     <%- gettext('Proctored') %>
                 </label>
                 <p class='field-message' id='proctored-exam-description'> <%- gettext('Proctored exams are timed and they record video of each learner taking the exam. The videos are then reviewed to ensure that learners follow all examination rules.') %> </p>
-                <label class="label">
-                    <input type="radio" name="exam_type" class="input input-radio practice_exam"
-                        aria-describedby="practice-exam-description"/>
-                    <%- gettext('Practice Proctored') %>
-                </label>
-                <p class='field-message' id='practice-exam-description'> <%- gettext("Use a practice proctored exam to introduce learners to the proctoring tools and processes. Results of a practice exam do not affect a learner's grade.") %> </p>
+                
+                <% var supports_onboarding = xblockInfo.get('supports_onboarding'); %>
+                <% if (supports_onboarding) { %>
+                    <label class="label">
+                        <input type="radio" name="exam_type" class="input input-radio onboarding_exam"
+                            aria-describedby="onboarding-exam-description"/>
+                        <%- gettext('Onboarding') %>
+                    </label>
+                    <p class='field-message' id='onboarding-exam-description'> <%- gettext("Use an onboarding exam to introduce learners to the proctoring tools and processes and to set up a base biometric profile if they do not already have one. Results of an onboarding exam do not affect a learner's grade.") %> </p>                
+
+                <% } else { %>
+                    <label class="label">
+                        <input type="radio" name="exam_type" class="input input-radio practice_exam"
+                            aria-describedby="practice-exam-description"/>
+                        <%- gettext('Practice Proctored') %>
+                    </label>
+                    <p class='field-message' id='practice-exam-description'> <%- gettext("Use a practice proctored exam to introduce learners to the proctoring tools and processes. Results of a practice exam do not affect a learner's grade.") %> </p>
+                <% } %>
             <% } %>
         </div>
         <div class="list-fields list-input exam-options">

@@ -84,8 +84,11 @@ if (xblockInfo.get('graded')) {
 
 var is_proctored_exam = xblockInfo.get('is_proctored_exam');
 var is_practice_exam = xblockInfo.get('is_practice_exam');
+var is_onboarding_exam = xblockInfo.get('is_onboarding_exam');
 if (is_proctored_exam) {
-    if (is_practice_exam) {
+    if (is_onboarding_exam) {
+        var exam_value = gettext('Onboarding Exam');
+    } else if (is_practice_exam) {
         var exam_value = gettext('Practice proctored Exam');
     } else {
         var exam_value = gettext('Proctored Exam');
