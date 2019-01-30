@@ -27,8 +27,7 @@
                             aria-describedby="onboarding-exam-description"/>
                         <%- gettext('Onboarding') %>
                     </label>
-                    <p class='field-message' id='onboarding-exam-description'> <%- gettext("Use an onboarding exam to introduce learners to the proctoring tools and processes and to set up a base biometric profile if they do not already have one. Results of an onboarding exam do not affect a learner's grade.") %> </p>                
-
+                    <p class='field-message' id='onboarding-exam-description'> <%- gettext("Use an onboarding exam to introduce learners to the proctoring tools and processes and to set up a base biometric profile if they do not already have one. Results of an onboarding exam do not affect a learner's grade.") %> </p>
                 <% } else { %>
                     <label class="label">
                         <input type="radio" name="exam_type" class="input input-radio practice_exam"

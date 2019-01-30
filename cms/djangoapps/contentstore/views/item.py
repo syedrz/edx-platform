@@ -68,7 +68,7 @@ from xmodule.modulestore.inheritance import own_metadata
 from xmodule.services import ConfigurationService, SettingsService
 from xmodule.tabs import CourseTabList
 from xmodule.x_module import DEPRECATION_VSCOMPAT_EVENT, PREVIEW_VIEWS, STUDENT_VIEW, STUDIO_VIEW
-from edx_proctoring.api import get_exam_configuration_dashboard_url, does_backend_have_onboarding_exams
+from edx_proctoring.api import get_exam_configuration_dashboard_url, does_course_support_onboarding
 
 __all__ = [
     'orphan_handler', 'xblock_handler', 'xblock_view_handler', 'xblock_outline_handler', 'xblock_container_handler'
@@ -1222,7 +1222,7 @@ def create_xblock_info(xblock, data=None, metadata=None, include_ancestor_info=F
                 })
             elif xblock.category == 'sequential':
                 rules_url = settings.PROCTORING_SETTINGS.get('LINK_URLS', {}).get('online_proctoring_rules', "")
-                supports_onboarding = does_backend_have_onboarding_exams(course.id)
+                supports_onboarding = does_course_support_onboarding(course.id)
 
                 proctoring_exam_configuration_link = None
                 if xblock.is_proctored_exam:
