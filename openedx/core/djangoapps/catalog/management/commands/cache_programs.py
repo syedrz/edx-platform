@@ -61,6 +61,7 @@ class Command(BaseCommand):
             new_pathways, pathways_failed = self.get_pathways(client, site)
             new_pathways, new_programs, pathway_processing_failed = self.process_pathways(site, new_pathways,
                                                                                           new_programs)
+            import pdb; pdb.set_trace()
             new_courses, courses_failed = self.get_courses(client, site)
 
             if program_uuids_failed or program_details_failed or pathways_failed or pathway_processing_failed or courses_failed:
