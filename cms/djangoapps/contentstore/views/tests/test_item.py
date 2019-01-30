@@ -2787,8 +2787,9 @@ class TestXBlockInfo(ItemTest):
 
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_SPECIAL_EXAMS': True})
     @patch('contentstore.views.item.get_exam_configuration_dashboard_url')
-    @patch('contentstore.views.item.does_backend_have_onboarding_exams')
-    def test_proctored_exam_xblock_info(self, get_exam_configuration_dashboard_url_patch, does_backend_have_onboarding_exams_patch):
+    @patch('contentstore.views.item.does_course_support_onboarding')
+    def test_proctored_exam_xblock_info(self, get_exam_configuration_dashboard_url_patch, 
+                                        does_course_support_onboarding_patch):
         self.course.enable_proctored_exams = True
         self.course.save()
         self.store.update_item(self.course, self.user.id)
@@ -2811,7 +2812,7 @@ class TestXBlockInfo(ItemTest):
         sequential = modulestore().get_item(sequential.location)
 
         get_exam_configuration_dashboard_url_patch.return_value = 'test_url'
-        does_backend_have_onboarding_exams_patch.return_value = True
+        does_course_support_onboarding_patch.return_value = True
         xblock_info = create_xblock_info(
             sequential,
             include_child_info=True,
