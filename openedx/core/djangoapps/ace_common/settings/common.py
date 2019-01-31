@@ -12,6 +12,6 @@ def plugin_settings(settings):
     settings.ACE_CHANNEL_DEFAULT_EMAIL = 'django_email'
     settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL = 'django_email'
 
-    settings.ACE_ROUTING_KEY = 'edx.core.low'
+    settings.ACE_ROUTING_KEY = 'edx.cms.core.default'
 
     settings.FEATURES['test_django_plugin'] = True
